@@ -222,6 +222,95 @@
     .menu-btn{display:block;}
     .hero,.part-divider,section.lesson,footer{padding-left:1.25em; padding-right:1.25em;}
   }
+
+  /* ---------- topbar action buttons ---------- */
+  .topbar .actions{display:flex; align-items:center; gap:.5em;}
+  .btn-action{
+    display:flex; align-items:center; gap:.45em;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:9px;
+    padding:.45em .8em; font-family:'Inter',sans-serif; font-size:.82rem; font-weight:600;
+    color:var(--navy); cursor:pointer;
+  }
+  .btn-action:hover{border-color:var(--navy-2);}
+  .btn-action svg{width:16px; height:16px; flex:none;}
+  @media(max-width:560px){
+    .btn-action .lbl-full{display:none;}
+  }
+
+  /* ---------- text-to-speech floating panel ---------- */
+  .tts-fab{
+    position:fixed; right:1.4em; bottom:1.4em; z-index:150;
+    width:54px; height:54px; border-radius:50%; border:none;
+    background:var(--navy); color:#fff; cursor:pointer;
+    box-shadow:0 6px 20px rgba(21,34,56,.35);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .tts-fab svg{width:24px; height:24px;}
+  .tts-fab.reading{background:var(--gold);}
+  .tts-panel{
+    position:fixed; right:1.4em; bottom:5.4em; z-index:150;
+    width:290px; max-width:calc(100vw - 2.8em);
+    background:var(--paper-2); border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 10px 34px rgba(21,34,56,.18);
+    padding:1.1em 1.2em 1.3em 1.2em;
+    display:none;
+  }
+  .tts-panel.open{display:block;}
+  .tts-panel h4{font-size:.92rem; margin-bottom:.15em;}
+  .tts-panel .tts-now{
+    font-size:.78rem; color:var(--ink-soft); margin-bottom:.8em; min-height:1.1em;
+  }
+  .tts-panel label{display:block; font-size:.74rem; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); margin:.7em 0 .3em 0;}
+  .tts-panel select{
+    width:100%; padding:.5em .6em; border-radius:8px; border:1px solid var(--line);
+    font-family:'Inter',sans-serif; font-size:.85rem; background:#fff; color:var(--ink);
+  }
+  .tts-controls{display:flex; gap:.5em; margin-top:1em;}
+  .tts-controls button{
+    flex:1; border:1px solid var(--line); background:#fff; border-radius:9px;
+    padding:.55em 0; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    color:var(--navy);
+  }
+  .tts-controls button svg{width:18px; height:18px;}
+  .tts-controls button.primary{background:var(--navy); border-color:var(--navy); color:#fff;}
+  .tts-controls button:disabled{opacity:.4; cursor:default;}
+  .tts-hint{font-size:.72rem; color:var(--ink-soft); margin-top:.7em; line-height:1.5;}
+  .reading-now{
+    outline:2px solid var(--gold); outline-offset:6px; border-radius:10px;
+    transition:outline-color .2s ease;
+  }
+  .lesson-speak{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
+    background:#fff; color:var(--navy); cursor:pointer; margin-left:.5em; vertical-align:middle;
+  }
+  .lesson-speak svg{width:13px; height:13px;}
+  .lesson-speak.reading{background:var(--gold); border-color:var(--gold); color:#fff;}
+
+  /* ---------- print / export to PDF (A4) ---------- */
+  @media print{
+    @page{ size:A4; margin:16mm 14mm; }
+    html,body{background:#fff;}
+    body{font-size:11.5pt; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+    .topbar, nav.toc, .tts-fab, .tts-panel, .skip-link, .lesson-speak{display:none !important;}
+    .shell{display:block; max-width:none;}
+    main{padding:0;}
+    a{color:var(--navy); text-decoration:none;}
+    .hero{padding:0 0 1.2em 0; max-width:none;}
+    .hero h1{font-size:22pt;}
+    .part-divider{break-before:page; padding:0 0 .8em 0; max-width:none;}
+    .part-divider:first-of-type{break-before:auto;}
+    section.lesson{padding:.5em 0 .9em 0; max-width:none; break-inside:avoid-page;}
+    .card,.diagram-box,.minicard,table,.simple,.example,details.quiz{break-inside:avoid-page;}
+    .diagram-box{border:1px solid #ccc;}
+    details.quiz{border:1px solid #ccc;}
+    details.quiz summary{cursor:default;}
+    details:not([open]) > *:not(summary){display:block !important;}
+    details.quiz summary::before{content:"" !important;}
+    .grid2,.grid3{gap:.6em;}
+    footer{padding:1.5em 0; max-width:none;}
+    .howto{break-inside:avoid-page;}
+  }
 </style>
 </head>
 <body>
@@ -229,7 +318,13 @@
 
 <div class="topbar">
   <div class="brand">Finanzas Públicas <small>· Guía de estudio</small></div>
-  <button class="menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false">☰</button>
+  <div class="actions">
+    <button class="btn-action" id="pdfBtn" title="Exportar a PDF (A4)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M14 2v5h5"/><path d="M9 15h1.5a1.5 1.5 0 0 0 0-3H9v5"/><path d="M13.5 12v5h1a1.5 1.5 0 0 0 1.5-1.5v-2a1.5 1.5 0 0 0-1.5-1.5h-1Z"/><path d="M20.5 12h-2v5"/><path d="M18.5 14.2h1.6"/></svg>
+      <span class="lbl-full">Exportar a PDF</span>
+    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false">☰</button>
+  </div>
 </div>
 
 <div class="shell">
@@ -1213,6 +1308,39 @@
   <p>Guía de estudio elaborada a partir de los materiales "Finanzas Públicas — Presupuesto y Calidad del Gasto" (Clase 1) y "Clasificador Presupuestario", de la Academia Diplomática y Consular del Paraguay. Contenido resumido y reescrito en lenguaje simple con fines de estudio.</p>
 </footer>
 
+<button class="tts-fab" id="ttsFab" aria-label="Abrir lector en voz alta" title="Escuchar la guía">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+</button>
+
+<div class="tts-panel" id="ttsPanel">
+  <h4>Escuchar la guía</h4>
+  <div class="tts-now" id="ttsNow">Elegí una voz y presioná reproducir.</div>
+
+  <label for="ttsVoice">Voz en español</label>
+  <select id="ttsVoice"></select>
+
+  <label for="ttsRate">Velocidad</label>
+  <select id="ttsRate">
+    <option value="0.8">Lenta</option>
+    <option value="1" selected>Normal</option>
+    <option value="1.25">Rápida</option>
+    <option value="1.5">Muy rápida</option>
+  </select>
+
+  <div class="tts-controls">
+    <button id="ttsPlay" class="primary" title="Reproducir">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7Z"/></svg>
+    </button>
+    <button id="ttsPause" title="Pausar" disabled>
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+    </button>
+    <button id="ttsStop" title="Detener" disabled>
+      <svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>
+    </button>
+  </div>
+  <p class="tts-hint">Lee la guía de corrido desde el inicio, o tocá el ícono 🔊 junto a cualquier título para empezar desde ahí.</p>
+</div>
+
 <script>
   const menuBtn = document.getElementById('menuBtn');
   const tocNav = document.getElementById('tocNav');
@@ -1248,6 +1376,220 @@
   }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
 
   sections.forEach(s => observer.observe(s));
+
+  // ---------- Exportar a PDF (A4) ----------
+  // <details> (las tarjetas de "Ponte a prueba") deben verse abiertas en el PDF,
+  // aunque el visitante no las haya tocado en pantalla.
+  let detailsReopenList = [];
+  window.addEventListener('beforeprint', () => {
+    detailsReopenList = Array.from(document.querySelectorAll('details.quiz:not([open])'));
+    detailsReopenList.forEach(d => d.setAttribute('open', ''));
+  });
+  window.addEventListener('afterprint', () => {
+    detailsReopenList.forEach(d => d.removeAttribute('open'));
+    detailsReopenList = [];
+  });
+
+  document.getElementById('pdfBtn').addEventListener('click', () => {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    window.print();
+  });
+
+  // ---------- Texto a voz (Web Speech API) ----------
+  (function () {
+    if (!('speechSynthesis' in window)) {
+      document.getElementById('ttsFab').style.display = 'none';
+      return;
+    }
+
+    const fab = document.getElementById('ttsFab');
+    const panel = document.getElementById('ttsPanel');
+    const voiceSel = document.getElementById('ttsVoice');
+    const rateSel = document.getElementById('ttsRate');
+    const nowEl = document.getElementById('ttsNow');
+    const playBtn = document.getElementById('ttsPlay');
+    const pauseBtn = document.getElementById('ttsPause');
+    const stopBtn = document.getElementById('ttsStop');
+
+    // Build the reading queue: hero + every .lesson section, in document order.
+    const readTargets = [
+      { id: '__hero', label: 'Introducción', el: document.querySelector('.hero') },
+      ...sections.map(s => ({
+        id: s.id,
+        label: s.querySelector('h3') ? s.querySelector('h3').textContent.trim() : s.id,
+        el: s
+      })),
+      { id: 'glosario', label: 'Glosario rápido', el: document.getElementById('glosario') }
+    ];
+
+    function textForSection(el) {
+      if (!el) return '';
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('svg, script, .lesson-speak').forEach(n => n.remove());
+      // details/quiz: read question and answer together
+      clone.querySelectorAll('details.quiz').forEach(d => {
+        const q = d.querySelector('summary') ? d.querySelector('summary').textContent.trim() : '';
+        const a = d.querySelector('.answer') ? d.querySelector('.answer').textContent.trim() : '';
+        d.textContent = q + '. ' + a;
+      });
+      return clone.textContent.replace(/\s+/g, ' ').trim();
+    }
+
+    let queue = [];
+    let queueIndex = 0;
+    let currentUtterance = null;
+    let isPaused = false;
+    let activeEl = null;
+
+    function populateVoices() {
+      const voices = window.speechSynthesis.getVoices();
+      if (voices.length === 0) {
+        voiceSel.innerHTML = '<option value="">Buscando voces del sistema…</option>';
+        return;
+      }
+      let spanish = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith('es'));
+      if (spanish.length === 0) {
+        voiceSel.innerHTML = '<option value="">No se encontraron voces en español; se usará la voz por defecto</option>';
+        return;
+      }
+      voiceSel.innerHTML = '';
+      spanish.forEach((v) => {
+        const opt = document.createElement('option');
+        opt.value = v.name;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        voiceSel.appendChild(opt);
+      });
+      // Prefer a Latin American Spanish voice by default if available
+      const preferred = spanish.findIndex(v => /MX|AR|419|US/i.test(v.lang) || /paulina|juan|diego|sabina/i.test(v.name));
+      if (preferred >= 0) voiceSel.selectedIndex = preferred;
+    }
+    populateVoices();
+    speechSynthesis.addEventListener('voiceschanged', populateVoices);
+    // Some browsers (notably Chrome) report voices asynchronously without
+    // firing voiceschanged reliably on first load — poll briefly as a fallback.
+    let voicePolls = 0;
+    const voicePoll = setInterval(() => {
+      voicePolls++;
+      if (window.speechSynthesis.getVoices().length > 0 || voicePolls > 10) {
+        populateVoices();
+        clearInterval(voicePoll);
+      }
+    }, 300);
+
+    function setActiveHighlight(el) {
+      if (activeEl) activeEl.classList.remove('reading-now');
+      document.querySelectorAll('.lesson-speak.reading').forEach(b => b.classList.remove('reading'));
+      activeEl = el;
+      if (activeEl) {
+        activeEl.classList.add('reading-now');
+        const btn = activeEl.querySelector('.lesson-speak');
+        if (btn) btn.classList.add('reading');
+      }
+    }
+
+    function updateControls(state) {
+      // state: 'idle' | 'playing' | 'paused'
+      playBtn.disabled = state === 'playing';
+      pauseBtn.disabled = state !== 'playing';
+      stopBtn.disabled = state === 'idle';
+      fab.classList.toggle('reading', state !== 'idle');
+    }
+
+    function speakNext() {
+      if (queueIndex >= queue.length) {
+        nowEl.textContent = 'Listo. Terminó la lectura.';
+        setActiveHighlight(null);
+        updateControls('idle');
+        return;
+      }
+      const item = queue[queueIndex];
+      const text = textForSection(item.el);
+      if (!text) { queueIndex++; speakNext(); return; }
+
+      nowEl.textContent = 'Leyendo: ' + item.label;
+      setActiveHighlight(item.el);
+      if (item.el && item.id !== '__hero') {
+        item.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      const voices = window.speechSynthesis.getVoices();
+      const chosen = voices.find(v => v.name === voiceSel.value);
+
+      currentUtterance = new SpeechSynthesisUtterance(text);
+      if (chosen) currentUtterance.voice = chosen;
+      currentUtterance.lang = chosen ? chosen.lang : 'es-ES';
+      currentUtterance.rate = parseFloat(rateSel.value);
+      currentUtterance.onend = () => {
+        queueIndex++;
+        speakNext();
+      };
+      currentUtterance.onerror = () => {
+        queueIndex++;
+        speakNext();
+      };
+      window.speechSynthesis.speak(currentUtterance);
+      updateControls('playing');
+    }
+
+    function startFrom(index) {
+      window.speechSynthesis.cancel();
+      queue = readTargets;
+      queueIndex = index;
+      isPaused = false;
+      speakNext();
+    }
+
+    fab.addEventListener('click', () => {
+      panel.classList.toggle('open');
+    });
+
+    playBtn.addEventListener('click', () => {
+      if (isPaused) {
+        window.speechSynthesis.resume();
+        isPaused = false;
+        updateControls('playing');
+        return;
+      }
+      if (queue.length === 0) {
+        startFrom(0);
+      } else {
+        startFrom(queueIndex);
+      }
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      window.speechSynthesis.pause();
+      isPaused = true;
+      updateControls('paused');
+    });
+
+    stopBtn.addEventListener('click', () => {
+      window.speechSynthesis.cancel();
+      queue = [];
+      queueIndex = 0;
+      isPaused = false;
+      nowEl.textContent = 'Elegí una voz y presioná reproducir.';
+      setActiveHighlight(null);
+      updateControls('idle');
+    });
+
+    // Per-section "listen from here" buttons
+    sections.forEach((s, idx) => {
+      const h3 = s.querySelector('h3');
+      if (!h3) return;
+      const btn = document.createElement('button');
+      btn.className = 'lesson-speak';
+      btn.title = 'Escuchar desde este tema';
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        panel.classList.add('open');
+        const targetIndex = readTargets.findIndex(t => t.id === s.id);
+        startFrom(targetIndex >= 0 ? targetIndex : 0);
+      });
+      h3.appendChild(btn);
+    });
+  })();
 </script>
 </body>
 </html>
