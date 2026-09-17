@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de estudio · Finanzas Públicas y Clasificador Presupuestario</title>
+<meta name="description" content="Guía de estudio explicada en lenguaje simple, con mapas conceptuales y esquemas, sobre finanzas públicas, el ciclo presupuestario y el Clasificador Presupuestario de Paraguay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238;
+    --navy-2:#1e3358;
+    --paper:#F6F7FA;
+    --paper-2:#ffffff;
+    --ink:#1B2130;
+    --ink-soft:#4C5568;
+    --line:#DDE2EA;
+    --gold:#B8862E;
+    --gold-soft:#F2E5CB;
+    --teal:#2E6F6B;
+    --teal-soft:#DCEEEC;
+    --coral:#B4483C;
+    --radius:14px;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    color:var(--navy);
+    line-height:1.18;
+    margin:0 0 .5em 0;
+  }
+  p{margin:0 0 1em 0;}
+  a{color:var(--navy-2);}
+  ul,ol{padding-left:1.25em; margin:0 0 1em 0;}
+  li{margin-bottom:.4em;}
+  strong{color:var(--navy);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- skip link ---------- */
+  .skip-link{
+    position:absolute; left:-999px; top:0; background:var(--navy); color:#fff;
+    padding:.6em 1em; z-index:200; border-radius:0 0 8px 0;
+  }
+  .skip-link:focus{left:0;}
+
+  /* ---------- top bar ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:100;
+    background:rgba(246,247,250,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.7em 1.25em;
+  }
+  .topbar .brand{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem; color:var(--navy);
+    display:flex; align-items:baseline; gap:.5em;
+  }
+  .topbar .brand small{font-family:'Inter'; font-weight:500; font-size:.72rem; color:var(--ink-soft); text-transform:none;}
+  .menu-btn{
+    display:none; background:none; border:1px solid var(--line); border-radius:8px;
+    width:38px; height:38px; cursor:pointer; color:var(--navy);
+  }
+
+  /* ---------- layout: sidebar + content ---------- */
+  .shell{
+    max-width:1240px; margin:0 auto; display:grid;
+    grid-template-columns:260px 1fr; gap:0;
+  }
+  nav.toc{
+    position:sticky; top:56px; align-self:start;
+    height:calc(100vh - 56px); overflow-y:auto;
+    padding:2em 1.25em 3em 1.5em;
+    border-right:1px solid var(--line);
+    font-size:.88rem;
+  }
+  nav.toc .toc-part{
+    text-transform:uppercase; letter-spacing:.06em; font-size:.72rem;
+    color:var(--gold); font-weight:700; margin:1.4em 0 .5em 0;
+  }
+  nav.toc .toc-part:first-child{margin-top:0;}
+  nav.toc a{
+    display:block; color:var(--ink-soft); text-decoration:none; padding:.3em 0;
+    border-left:2px solid transparent; padding-left:.7em; margin-left:-.7em;
+  }
+  nav.toc a:hover{color:var(--navy);}
+  nav.toc a.active{color:var(--navy); border-left-color:var(--gold); font-weight:600;}
+
+  main{padding:0 0 6em 0; min-width:0;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    padding:4.5em 2.5em 3em 2.5em; max-width:var(--maxw);
+  }
+  .hero .eyebrow{
+    color:var(--gold); font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    font-size:.78rem; margin-bottom:.9em;
+  }
+  .hero h1{font-size:clamp(2rem,4.2vw,2.9rem); max-width:14ch;}
+  .hero .lead{font-size:1.15rem; color:var(--ink-soft); max-width:56ch; margin-top:.6em;}
+  .hero .chips{display:flex; gap:.6em; flex-wrap:wrap; margin-top:1.6em;}
+  .chip{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:999px;
+    padding:.4em .9em; font-size:.82rem; color:var(--ink-soft); font-weight:500;
+  }
+  .howto{
+    margin-top:2.2em; background:var(--paper-2); border:1px solid var(--line);
+    border-radius:var(--radius); padding:1.3em 1.5em;
+  }
+  .howto h2{font-size:1rem; margin-bottom:.5em;}
+  .howto p{margin:0; color:var(--ink-soft); font-size:.95rem;}
+
+  /* ---------- part divider ---------- */
+  .part-divider{
+    max-width:var(--maxw); padding:3em 2.5em 1em 2.5em;
+    display:flex; align-items:center; gap:1em;
+  }
+  .part-divider .num{
+    font-family:'Fraunces',serif; font-size:2.6rem; font-weight:600; color:var(--gold-soft);
+    -webkit-text-stroke:1.5px var(--gold); color:transparent;
+  }
+  .part-divider .txt .kicker{color:var(--gold); font-weight:700; letter-spacing:.06em; text-transform:uppercase; font-size:.76rem;}
+  .part-divider .txt h2{font-size:1.7rem; margin:.15em 0 .2em 0;}
+  .part-divider .txt p{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  .part-divider.teal .num{-webkit-text-stroke-color:var(--teal); color:transparent;}
+  .part-divider.teal .kicker{color:var(--teal);}
+
+  /* ---------- lesson section ---------- */
+  section.lesson{
+    max-width:var(--maxw); padding:1.6em 2.5em; scroll-margin-top:70px;
+  }
+  section.lesson .tag{
+    display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--teal); background:var(--teal-soft);
+    padding:.25em .65em; border-radius:6px; margin-bottom:.9em;
+  }
+  section.lesson.p1 .tag{color:var(--gold); background:var(--gold-soft);}
+  section.lesson h3{font-size:1.5rem;}
+  .card{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:1.4em 1.6em; margin:1.2em 0;
+  }
+  .simple{
+    border-left:3px solid var(--gold); background:var(--gold-soft);
+    border-radius:0 var(--radius) var(--radius) 0;
+    padding:1em 1.3em; margin:1.3em 0; font-size:.98rem;
+  }
+  .simple .lbl{font-weight:700; color:var(--navy); display:block; margin-bottom:.25em; font-size:.85rem; text-transform:uppercase; letter-spacing:.04em;}
+  section.lesson.p2 .simple{border-left-color:var(--teal); background:var(--teal-soft);}
+  .example{
+    border-left:3px solid var(--navy-2); background:#eef1f7;
+    border-radius:0 var(--radius) var(--radius) 0;
+    padding:1em 1.3em; margin:1.3em 0; font-size:.96rem;
+  }
+  .example .lbl{font-weight:700; color:var(--navy); display:block; margin-bottom:.25em; font-size:.85rem; text-transform:uppercase; letter-spacing:.04em;}
+
+  .diagram-box{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:1.4em 1.2em; margin:1.4em 0; overflow-x:auto;
+  }
+  .diagram-box svg{display:block; margin:0 auto; max-width:100%; height:auto;}
+  .diagram-cap{text-align:center; font-size:.82rem; color:var(--ink-soft); margin-top:.6em;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:1em;}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:1em;}
+  @media(max-width:640px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+  .minicard{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:1em 1.1em;
+  }
+  .minicard h4{font-size:.98rem; margin-bottom:.3em; color:var(--navy);}
+  .minicard p{font-size:.9rem; color:var(--ink-soft); margin:0;}
+
+  details.quiz{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:12px;
+    padding:.9em 1.1em; margin-bottom:.7em; cursor:pointer;
+  }
+  details.quiz summary{font-weight:600; color:var(--navy); list-style:none; display:flex; align-items:center; gap:.6em;}
+  details.quiz summary::-webkit-details-marker{display:none;}
+  details.quiz summary::before{content:"?"; background:var(--gold); color:#fff; width:22px; height:22px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.8rem; flex:none;}
+  details.quiz[open] summary::before{content:"✓"; background:var(--teal);}
+  details.quiz .answer{margin-top:.6em; padding-top:.6em; border-top:1px dashed var(--line); font-size:.93rem; color:var(--ink-soft);}
+
+  table{width:100%; border-collapse:collapse; margin:1.2em 0; font-size:.92rem;}
+  th,td{text-align:left; padding:.55em .7em; border-bottom:1px solid var(--line);}
+  th{color:var(--navy); font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.03em;}
+  tr:last-child td{border-bottom:none;}
+  td.num{font-family:'JetBrains Mono',monospace; font-variant-numeric:tabular-nums;}
+
+  code.tag-code{
+    font-family:'JetBrains Mono',monospace; background:var(--navy); color:#fff;
+    padding:.15em .45em; border-radius:5px; font-size:.85em;
+  }
+
+  footer{
+    max-width:var(--maxw); padding:2em 2.5em 5em 2.5em; color:var(--ink-soft); font-size:.88rem;
+    border-top:1px solid var(--line); margin-top:2em;
+  }
+
+  @media(max-width:900px){
+    .shell{grid-template-columns:1fr;}
+    nav.toc{
+      position:fixed; inset:56px 0 0 0; height:calc(100vh - 56px);
+      background:var(--paper); z-index:90; transform:translateX(-100%);
+      transition:transform .25s ease; border-right:none;
+    }
+    nav.toc.open{transform:translateX(0);}
+    .menu-btn{display:block;}
+    .hero,.part-divider,section.lesson,footer{padding-left:1.25em; padding-right:1.25em;}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+<div class="topbar">
+  <div class="brand">Finanzas Públicas <small>· Guía de estudio</small></div>
+  <button class="menu-btn" id="menuBtn" aria-label="Abrir índice" aria-expanded="false">☰</button>
+</div>
+
+<div class="shell">
+<nav class="toc" id="tocNav" aria-label="Índice de la guía">
+  <div class="toc-part">Parte 1 · Finanzas públicas</div>
+  <a href="#p1-1">1. ¿Qué son las finanzas públicas?</a>
+  <a href="#p1-2">2. Del plan al presupuesto</a>
+  <a href="#p1-3">3. La gestión presupuestaria</a>
+  <a href="#p1-4">4. ¿Para qué sirve un presupuesto?</a>
+  <a href="#p1-5">5. Las reglas del juego</a>
+  <a href="#p1-6">6. Quiénes forman el sector público</a>
+  <a href="#p1-7">7. Dónde se aplica el presupuesto</a>
+  <a href="#p1-8">8. Dentro de la Ley 1535/99</a>
+  <a href="#p1-9">9. Cómo se elabora el PGN</a>
+  <a href="#p1-10">10. El PGN 2026 en números</a>
+  <a href="#p1-11">11. Hacia dónde va el PGN 2027</a>
+
+  <div class="toc-part">Parte 2 · Clasificador</div>
+  <a href="#p2-1">1. ¿Qué es el Clasificador?</a>
+  <a href="#p2-2">2. Cómo trabaja el Clasificador</a>
+  <a href="#p2-3">3. Las 5 preguntas del gasto</a>
+  <a href="#p2-4">4. ¿Quién gasta? (Institucional)</a>
+  <a href="#p2-5">5. ¿Para qué? (Funcional)</a>
+  <a href="#p2-6">6. ¿En qué programa? (Programática)</a>
+  <a href="#p2-7">7. ¿Qué tipo de gasto? (Económica)</a>
+  <a href="#p2-8">8. Ponte a prueba</a>
+  <a href="#p2-9">9. ¿Con qué plata? (Fuente)</a>
+  <a href="#p2-10">10. El código del gasto</a>
+  <a href="#p2-11">11. Ejemplo completo</a>
+
+  <div class="toc-part">&nbsp;</div>
+  <a href="#glosario">Glosario rápido</a>
+</nav>
+
+<main id="contenido">
+
+<section class="hero">
+  <div class="eyebrow">Academia Diplomática y Consular · Curso de Perfeccionamiento</div>
+  <h1>Entender el presupuesto público, explicado en simple</h1>
+  <p class="lead">Esta guía resume, en lenguaje llano y con esquemas visuales, los conceptos clave de dos materiales de estudio: la clase introductoria de Finanzas Públicas y el Clasificador Presupuestario del Paraguay. No hace falta ser economista para entenderla.</p>
+  <div class="chips">
+    <span class="chip">🏛️ Finanzas públicas</span>
+    <span class="chip">📊 Presupuesto General de la Nación</span>
+    <span class="chip">🗂️ Clasificador Presupuestario</span>
+    <span class="chip">🇵🇾 Paraguay</span>
+  </div>
+  <div class="howto">
+    <h2>Cómo usar esta guía</h2>
+    <p>Está dividida en dos partes. La <strong>Parte 1</strong> explica qué es el presupuesto público y cómo se construye. La <strong>Parte 2</strong> explica el Clasificador Presupuestario, la "etiqueta" que ordena cada guaraní que gasta el Estado. Cada tema trae un cuadro <strong>"En simple"</strong> con la idea central, y varios traen un esquema para visualizarla. Podés leerla de corrido o saltar directo al tema que te interese desde el índice.</p>
+  </div>
+</section>
+
+<div class="part-divider">
+  <div class="num">01</div>
+  <div class="txt">
+    <div class="kicker">Parte 1</div>
+    <h2>Finanzas públicas: la base de todo</h2>
+    <p>Qué hace el Estado con el dinero público, y cómo el presupuesto convierte decisiones políticas en resultados concretos para la gente.</p>
+  </div>
+</div>
+
+<section class="lesson p1" id="p1-1">
+  <span class="tag">Tema 1</span>
+  <h3>¿Qué son las finanzas públicas?</h3>
+  <p>Pensá en el Estado como una gran familia que tiene que administrar su plata: entra dinero, hay que decidir en qué gastarlo, hay que usarlo bien, y después hay que rendir cuentas de qué se hizo con él. Eso, a gran escala y con reglas mucho más estrictas, es lo que estudian las <strong>finanzas públicas</strong>.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ciclo del Estado: obtiene recursos, asigna recursos, presta bienes y servicios, rinde cuentas, y vuelve a empezar">
+      <defs>
+        <marker id="arrow1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#B8862E"/></marker>
+      </defs>
+      <circle cx="320" cy="150" r="72" fill="#152238"/>
+      <text x="320" y="145" text-anchor="middle" fill="#fff" font-family="Fraunces,serif" font-weight="600" font-size="19">EL</text>
+      <text x="320" y="168" text-anchor="middle" fill="#fff" font-family="Fraunces,serif" font-weight="600" font-size="19">ESTADO</text>
+
+      <path d="M 320 60 A 110 110 0 0 1 430 150" fill="none" stroke="#B8862E" stroke-width="2.5" marker-end="url(#arrow1)"/>
+      <path d="M 430 150 A 110 110 0 0 1 320 260" fill="none" stroke="#B8862E" stroke-width="2.5" marker-end="url(#arrow1)"/>
+      <path d="M 320 260 A 110 110 0 0 1 210 150" fill="none" stroke="#B8862E" stroke-width="2.5" marker-end="url(#arrow1)"/>
+      <path d="M 210 150 A 110 110 0 0 1 320 60" fill="none" stroke="#B8862E" stroke-width="2.5" marker-end="url(#arrow1)"/>
+
+      <g font-family="Inter,sans-serif">
+        <rect x="360" y="8" width="200" height="58" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="460" y="27" text-anchor="middle" font-size="12.5" font-weight="700" fill="#152238">1. OBTIENE RECURSOS</text>
+        <text x="460" y="44" text-anchor="middle" font-size="10.5" fill="#4C5568">Impuestos, préstamos,</text>
+        <text x="460" y="58" text-anchor="middle" font-size="10.5" fill="#4C5568">donaciones y otros ingresos</text>
+
+        <rect x="470" y="180" width="165" height="58" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="552" y="199" text-anchor="middle" font-size="12.5" font-weight="700" fill="#152238">2. ASIGNA</text>
+        <text x="552" y="216" text-anchor="middle" font-size="10.5" fill="#4C5568">Decide cuánto y en qué</text>
+        <text x="552" y="230" text-anchor="middle" font-size="10.5" fill="#4C5568">se gastará (presupuesto)</text>
+
+        <rect x="15" y="180" width="200" height="58" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="115" y="199" text-anchor="middle" font-size="12.5" font-weight="700" fill="#152238">3. PRESTA SERVICIOS</text>
+        <text x="115" y="216" text-anchor="middle" font-size="10.5" fill="#4C5568">Salud, educación, seguridad,</text>
+        <text x="115" y="230" text-anchor="middle" font-size="10.5" fill="#4C5568">infraestructura...</text>
+
+        <rect x="5" y="8" width="175" height="58" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="92" y="27" text-anchor="middle" font-size="12.5" font-weight="700" fill="#152238">4. RINDE CUENTAS</text>
+        <text x="92" y="44" text-anchor="middle" font-size="10.5" fill="#4C5568">Informa resultados y</text>
+        <text x="92" y="58" text-anchor="middle" font-size="10.5" fill="#4C5568">permite el control social</text>
+      </g>
+    </svg>
+    <p class="diagram-cap">El ciclo se repite todo el tiempo: cada gestión termina alimentando la siguiente.</p>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Las finanzas públicas estudian cómo el Estado <strong>consigue</strong> plata, <strong>decide</strong> en qué usarla, la <strong>usa</strong> para dar servicios a la gente, y después <strong>explica</strong> qué hizo con ella. Es un ciclo que no termina nunca.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-2">
+  <span class="tag">Tema 2</span>
+  <h3>Del plan al presupuesto</h3>
+  <p>El presupuesto no aparece de la nada. Es el paso que conecta la visión de país (a dónde queremos llegar) con lo que la gente realmente recibe (hospitales funcionando, rutas, escuelas). Sin ese paso intermedio, las buenas intenciones se quedan escritas en un papel y nunca se convierten en algo real.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 760 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flujo: Plan Nacional, Políticas Públicas, Presupuesto, Bienes y Servicios, Resultados">
+      <defs>
+        <marker id="arrow2" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#9AA3B5"/></marker>
+      </defs>
+      <g font-family="Inter,sans-serif" text-anchor="middle">
+        <rect x="5" y="35" width="130" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="70" y="60" font-size="12" font-weight="700" fill="#152238">PLAN</text>
+        <text x="70" y="75" font-size="12" font-weight="700" fill="#152238">NACIONAL</text>
+        <text x="70" y="95" font-size="9.5" fill="#4C5568">Visión de país y</text>
+        <text x="70" y="107" font-size="9.5" fill="#4C5568">grandes objetivos</text>
+
+        <line x1="140" y1="75" x2="163" y2="75" stroke="#9AA3B5" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <rect x="168" y="35" width="130" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="233" y="55" font-size="11.5" font-weight="700" fill="#152238">POLÍTICAS</text>
+        <text x="233" y="70" font-size="11.5" font-weight="700" fill="#152238">PÚBLICAS</text>
+        <text x="233" y="90" font-size="9.5" fill="#4C5568">Prioridades y</text>
+        <text x="233" y="102" font-size="9.5" fill="#4C5568">estrategias</text>
+
+        <line x1="303" y1="75" x2="326" y2="75" stroke="#9AA3B5" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <rect x="331" y="25" width="140" height="100" rx="10" fill="#152238"/>
+        <text x="401" y="60" font-size="13" font-weight="700" fill="#fff">PRESUPUESTO</text>
+        <text x="401" y="80" font-size="9.5" fill="#DCE3F0">Asigna los recursos</text>
+        <text x="401" y="93" font-size="9.5" fill="#DCE3F0">para financiar planes</text>
+        <text x="401" y="106" font-size="9.5" fill="#DCE3F0">y programas</text>
+
+        <line x1="476" y1="75" x2="499" y2="75" stroke="#9AA3B5" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <rect x="504" y="35" width="130" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+        <text x="569" y="55" font-size="11.5" font-weight="700" fill="#152238">BIENES Y</text>
+        <text x="569" y="70" font-size="11.5" font-weight="700" fill="#152238">SERVICIOS</text>
+        <text x="569" y="90" font-size="9.5" fill="#4C5568">El Estado entrega</text>
+        <text x="569" y="102" font-size="9.5" fill="#4C5568">e invierte</text>
+
+        <line x1="639" y1="75" x2="662" y2="75" stroke="#9AA3B5" stroke-width="2" marker-end="url(#arrow2)"/>
+
+        <rect x="627" y="35" width="130" height="80" rx="10" fill="#F2E5CB" stroke="#B8862E"/>
+        <text x="692" y="60" font-size="12" font-weight="700" fill="#152238">RESULTADOS</text>
+        <text x="692" y="80" font-size="9.5" fill="#6b5a30">Mejores condiciones</text>
+        <text x="692" y="92" font-size="9.5" fill="#6b5a30">de vida y desarrollo</text>
+      </g>
+    </svg>
+    <p class="diagram-cap">El presupuesto es el puente entre lo que el gobierno quiere lograr y lo que la ciudadanía realmente recibe.</p>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Primero se define hacia dónde va el país (plan), después qué políticas se van a aplicar, luego el presupuesto pone la plata detrás de eso, y así se convierte en servicios reales y, finalmente, en resultados que la gente nota en su vida diaria.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-3">
+  <span class="tag">Tema 3</span>
+  <h3>La gestión presupuestaria: cinco pasos</h3>
+  <p>"Gestión presupuestaria" suena complicado, pero es simplemente todo lo que hay que hacer para que el presupuesto pase de ser un número en un papel a convertirse en algo útil, y para saber después si funcionó.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cinco pasos: planificar, asignar recursos, ejecutar, controlar, evaluar">
+      <defs>
+        <marker id="arrow3" markerWidth="8" markerHeight="8" refX="5" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5 Z" fill="#B8862E"/></marker>
+      </defs>
+      <g font-family="Inter,sans-serif" text-anchor="middle">
+        <!-- step template repeated -->
+        <g>
+          <circle cx="65" cy="45" r="24" fill="#152238"/>
+          <text x="65" y="52" font-size="18" font-weight="700" fill="#fff" font-family="Fraunces,serif">1</text>
+          <rect x="5" y="82" width="120" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+          <text x="65" y="105" font-size="12.5" font-weight="700" fill="#152238">Planificar</text>
+          <text x="65" y="123" font-size="9.3" fill="#4C5568">Se definen objetivos,</text>
+          <text x="65" y="135" font-size="9.3" fill="#4C5568">metas y prioridades</text>
+          <text x="65" y="147" font-size="9.3" fill="#4C5568">según las necesidades</text>
+        </g>
+        <line x1="130" y1="45" x2="163" y2="45" stroke="#B8862E" stroke-width="2" marker-end="url(#arrow3)"/>
+
+        <g>
+          <circle cx="210" cy="45" r="24" fill="#152238"/>
+          <text x="210" y="52" font-size="18" font-weight="700" fill="#fff" font-family="Fraunces,serif">2</text>
+          <rect x="150" y="82" width="120" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+          <text x="210" y="105" font-size="12.5" font-weight="700" fill="#152238">Asignar</text>
+          <text x="210" y="123" font-size="9.3" fill="#4C5568">Se reparten los</text>
+          <text x="210" y="135" font-size="9.3" fill="#4C5568">recursos entre</text>
+          <text x="210" y="147" font-size="9.3" fill="#4C5568">instituciones</text>
+        </g>
+        <line x1="275" y1="45" x2="308" y2="45" stroke="#B8862E" stroke-width="2" marker-end="url(#arrow3)"/>
+
+        <g>
+          <circle cx="355" cy="45" r="24" fill="#152238"/>
+          <text x="355" y="52" font-size="18" font-weight="700" fill="#fff" font-family="Fraunces,serif">3</text>
+          <rect x="295" y="82" width="120" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+          <text x="355" y="105" font-size="12.5" font-weight="700" fill="#152238">Ejecutar</text>
+          <text x="355" y="123" font-size="9.3" fill="#4C5568">Las instituciones</text>
+          <text x="355" y="135" font-size="9.3" fill="#4C5568">usan la plata en</text>
+          <text x="355" y="147" font-size="9.3" fill="#4C5568">sus actividades</text>
+        </g>
+        <line x1="420" y1="45" x2="453" y2="45" stroke="#B8862E" stroke-width="2" marker-end="url(#arrow3)"/>
+
+        <g>
+          <circle cx="500" cy="45" r="24" fill="#152238"/>
+          <text x="500" y="52" font-size="18" font-weight="700" fill="#fff" font-family="Fraunces,serif">4</text>
+          <rect x="440" y="82" width="120" height="80" rx="10" fill="#fff" stroke="#DDE2EA"/>
+          <text x="500" y="105" font-size="12.5" font-weight="700" fill="#152238">Controlar</text>
+          <text x="500" y="123" font-size="9.3" fill="#4C5568">Se verifica el buen</text>
+          <text x="500" y="135" font-size="9.3" fill="#4C5568">uso, las normas y</text>
+          <text x="500" y="147" font-size="9.3" fill="#4C5568">la transparencia</text>
+        </g>
+        <line x1="565" y1="45" x2="598" y2="45" stroke="#B8862E" stroke-width="2" marker-end="url(#arrow3)"/>
+
+        <g>
+          <circle cx="645" cy="45" r="24" fill="#B8862E"/>
+          <text x="645" y="52" font-size="18" font-weight="700" fill="#fff" font-family="Fraunces,serif">5</text>
+          <rect x="585" y="82" width="130" height="80" rx="10" fill="#F2E5CB" stroke="#B8862E"/>
+          <text x="650" y="105" font-size="12.5" font-weight="700" fill="#152238">Evaluar</text>
+          <text x="650" y="123" font-size="9.3" fill="#6b5a30">Se miden resultados</text>
+          <text x="650" y="135" font-size="9.3" fill="#6b5a30">para decidir mejor</text>
+          <text x="650" y="147" font-size="9.3" fill="#6b5a30">la próxima vez</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Primero se piensa qué hace falta (planificar), se reparte la plata (asignar), se usa (ejecutar), se revisa que se haya usado bien (controlar) y al final se mide si sirvió (evaluar). Una buena gestión asegura que cada guaraní se convierta en bienestar real.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-4">
+  <span class="tag">Tema 4</span>
+  <h3>¿Para qué sirve un presupuesto?</h3>
+  <p>Más allá de la teoría, el presupuesto cumple funciones muy concretas. Estas son las seis principales:</p>
+
+  <div class="grid3">
+    <div class="minicard"><h4>1. Define prioridades</h4><p>Decide en qué se invertirán los recursos para atender lo más importante del país.</p></div>
+    <div class="minicard"><h4>2. Asigna recursos</h4><p>Reparte lo que hay de forma planificada entre instituciones y proyectos.</p></div>
+    <div class="minicard"><h4>3. Orienta la gestión</h4><p>Guía cómo se ejecutan las políticas y se entregan servicios a la gente.</p></div>
+    <div class="minicard"><h4>4. Promueve transparencia</h4><p>Hace visible el uso de la plata pública y facilita el control ciudadano.</p></div>
+    <div class="minicard"><h4>5. Mejora la eficiencia</h4><p>Ayuda a evitar desperdicios y a usar mejor lo que hay.</p></div>
+    <div class="minicard"><h4>6. Genera resultados</h4><p>Contribuye a las metas del país y al bienestar de la población.</p></div>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Un buen presupuesto no se mide por cuánto gasta, sino por <strong>cuánto transforma la vida de las personas</strong>.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-5">
+  <span class="tag">Tema 5</span>
+  <h3>Las reglas del juego: marco legal y principios</h3>
+  <p>El presupuesto no se arma como cada quien quiere: hay dos normas base que lo obligan y ordenan, y cinco principios que lo protegen de decisiones arbitrarias.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--navy);font-family:'Fraunces',serif;font-size:1.05rem;">📜 Constitución Nacional (Art. 216)</h4>
+      <p style="margin:0;font-size:.92rem;">Obliga a que exista un Presupuesto General de la Nación (PGN) y marca los plazos: debe presentarse al Congreso antes del <strong>1 de septiembre</strong> y aprobarse antes del <strong>30 de noviembre</strong>.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0;color:var(--navy);font-family:'Fraunces',serif;font-size:1.05rem;">📘 Ley N° 1535/99</h4>
+      <p style="margin:0;font-size:.92rem;">Es la "Ley de Administración Financiera del Estado": el reglamento detallado de cómo se planifica, ejecuta, controla y liquida el presupuesto, además de la deuda, la tesorería y la contabilidad pública.</p>
+    </div>
+  </div>
+
+  <h4 style="margin-top:1.6em;">Los cinco principios presupuestarios</h4>
+  <table>
+    <tr><th>Principio</th><th>Qué significa, en simple</th></tr>
+    <tr><td><strong>Universalidad</strong></td><td>Todo ingreso y todo gasto tiene que aparecer en el presupuesto. Nada queda "afuera".</td></tr>
+    <tr><td><strong>Legalidad</strong></td><td>Los ingresos son una estimación que se puede superar; los gastos autorizados son un techo que no se puede pasar.</td></tr>
+    <tr><td><strong>Unidad</strong></td><td>Todo va en un solo documento, no en varios repartidos.</td></tr>
+    <tr><td><strong>Anualidad</strong></td><td>El presupuesto se hace para un año, aunque pueda haber planes de inversión a más largo plazo.</td></tr>
+    <tr><td><strong>Equilibrio</strong></td><td>No se puede gastar más de lo que se tiene en ingresos y financiamiento.</td></tr>
+  </table>
+
+  <div class="example">
+    <span class="lbl">Además, la ley aclara que</span>
+    Ninguna institución puede meter en su presupuesto proyectos que no tengan que ver con sus funciones; los gobiernos departamentales reciben recursos según planes de desarrollo, no al azar; y la Ley del PGN no puede modificar otras leyes permanentes ni tener efecto fuera de ese año.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-6">
+  <span class="tag">Tema 6</span>
+  <h3>Quiénes forman el sector público paraguayo</h3>
+  <p>Cuando hablamos de "el Estado" en realidad hablamos de un conjunto grande de instituciones. Entender este mapa ayuda a saber de quién se habla cuando se menciona "Administración Central" o "entidades descentralizadas".</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Organigrama del sector público paraguayo">
+      <g font-family="Inter,sans-serif" text-anchor="middle">
+        <rect x="255" y="8" width="250" height="42" rx="10" fill="#152238"/>
+        <text x="380" y="34" font-size="13" font-weight="700" fill="#fff">SECTOR PÚBLICO DEL PARAGUAY</text>
+
+        <line x1="380" y1="50" x2="380" y2="68" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="185" y1="68" x2="575" y2="68" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="185" y1="68" x2="185" y2="82" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="575" y1="68" x2="575" y2="82" stroke="#9AA3B5" stroke-width="2"/>
+
+        <rect x="80" y="82" width="210" height="38" rx="9" fill="#F2E5CB" stroke="#B8862E"/>
+        <text x="185" y="106" font-size="12" font-weight="700" fill="#6b5a30">GOBIERNO CENTRAL</text>
+
+        <rect x="470" y="82" width="210" height="38" rx="9" fill="#DCEEEC" stroke="#2E6F6B"/>
+        <text x="575" y="106" font-size="12" font-weight="700" fill="#1c4a47">GOBIERNOS MUNICIPALES</text>
+
+        <line x1="185" y1="120" x2="185" y2="140" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="70" y1="140" x2="300" y2="140" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="70" y1="140" x2="70" y2="155" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="300" y1="140" x2="300" y2="155" stroke="#9AA3B5" stroke-width="2"/>
+
+        <rect x="5" y="155" width="130" height="34" rx="8" fill="#fff" stroke="#DDE2EA"/>
+        <text x="70" y="176" font-size="9" font-weight="700" fill="#152238">ADMINISTRACIÓN CENTRAL</text>
+
+        <rect x="235" y="155" width="130" height="34" rx="8" fill="#fff" stroke="#DDE2EA"/>
+        <text x="300" y="176" font-size="10" font-weight="700" fill="#152238">ADMIN. DESCENTRALIZADA</text>
+
+        <!-- Admin central children -->
+        <g font-size="9.3" fill="#4C5568">
+          <line x1="70" y1="189" x2="70" y2="200" stroke="#DDE2EA" stroke-width="1.5"/>
+          <rect x="5" y="200" width="130" height="120" rx="7" fill="#fff" stroke="#DDE2EA"/>
+          <text x="70" y="216" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Poder Ejecutivo</text>
+          <text x="70" y="233" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Poder Legislativo</text>
+          <text x="70" y="250" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Poder Judicial</text>
+          <text x="70" y="267" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Contraloría</text>
+          <text x="70" y="284" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Otras entidades</text>
+        </g>
+
+        <!-- Admin descentralizada children -->
+        <g font-size="9.3" fill="#4C5568">
+          <line x1="300" y1="189" x2="300" y2="200" stroke="#DDE2EA" stroke-width="1.5"/>
+          <rect x="235" y="200" width="130" height="120" rx="7" fill="#fff" stroke="#DDE2EA"/>
+          <text x="300" y="216" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Gob. Departamentales</text>
+          <text x="300" y="233" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Universidades</text>
+          <text x="300" y="250" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Entidades Seg. Social</text>
+          <text x="300" y="267" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Empresas Públicas</text>
+        </g>
+
+        <line x1="575" y1="120" x2="575" y2="140" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="470" y1="140" x2="690" y2="140" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="470" y1="140" x2="470" y2="155" stroke="#9AA3B5" stroke-width="2"/>
+        <line x1="690" y1="140" x2="690" y2="155" stroke="#9AA3B5" stroke-width="2"/>
+
+        <rect x="405" y="155" width="130" height="34" rx="8" fill="#fff" stroke="#DDE2EA"/>
+        <text x="470" y="176" font-size="10.5" font-weight="700" fill="#152238">BANCO CENTRAL</text>
+
+        <rect x="625" y="155" width="130" height="34" rx="8" fill="#fff" stroke="#DDE2EA"/>
+        <text x="690" y="176" font-size="10" font-weight="700" fill="#152238">ENTES AUTÓNOMOS</text>
+
+        <g font-size="9.3" fill="#4C5568">
+          <line x1="470" y1="189" x2="470" y2="200" stroke="#DDE2EA" stroke-width="1.5"/>
+          <rect x="405" y="200" width="130" height="70" rx="7" fill="#fff" stroke="#DDE2EA"/>
+          <text x="470" y="216" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">Entidades Financieras</text>
+
+          <line x1="690" y1="189" x2="690" y2="200" stroke="#DDE2EA" stroke-width="1.5"/>
+          <rect x="625" y="200" width="130" height="70" rx="7" fill="#fff" stroke="#DDE2EA"/>
+          <text x="690" y="216" text-anchor="middle" font-weight="700" fill="#152238" font-size="9.6">y Autárquicos</text>
+        </g>
+      </g>
+    </svg>
+    <p class="diagram-cap">El "Gobierno Central" incluye Administración Central y Administración Descentralizada; junto con los Gobiernos Municipales forman todo el sector público.</p>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Cuando escuchás "Administración Central" piensa en los tres poderes del Estado y la Contraloría. Cuando escuchás "entidades descentralizadas", pensá en organismos con más autonomía como el IPS, las universidades o las empresas públicas. Todos manejan presupuesto, pero de forma distinta.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-7">
+  <span class="tag">Tema 7</span>
+  <h3>Dónde se aplica el presupuesto público</h3>
+  <p>La Ley 1535/99 no deja dudas: el presupuesto alcanza a prácticamente toda institución que maneje fondos del Estado.</p>
+  <div class="grid3">
+    <div class="minicard"><h4>Los tres poderes</h4><p>Poder Legislativo, Poder Ejecutivo y Poder Judicial.</p></div>
+    <div class="minicard"><h4>Control y otros órganos</h4><p>Contraloría General de la República, Banco Central y otros organismos del Estado.</p></div>
+    <div class="minicard"><h4>Territorio</h4><p>Gobernaciones y entes autónomos y autárquicos.</p></div>
+    <div class="minicard"><h4>Seguridad social</h4><p>Entidades públicas de seguridad social (como el IPS).</p></div>
+    <div class="minicard"><h4>Actividad económica</h4><p>Empresas públicas, empresas mixtas y entidades financieras oficiales.</p></div>
+    <div class="minicard"><h4>Educación superior</h4><p>Universidades públicas.</p></div>
+  </div>
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Si una institución maneja plata del Estado, tarde o temprano aparece en el presupuesto público. Nadie queda "por fuera" del sistema.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-8">
+  <span class="tag">Tema 8</span>
+  <h3>Un vistazo dentro de la Ley 1535/99</h3>
+  <p>No hace falta memorizar toda la ley, pero sí conviene saber cómo está organizada para ubicar rápido cualquier tema.</p>
+  <table>
+    <tr><th>Título</th><th>De qué trata</th></tr>
+    <tr><td class="mono">II</td><td>El sistema de presupuesto: cómo se programa, se formula, se ejecuta, se modifica y se controla.</td></tr>
+    <tr><td class="mono">III</td><td>El sistema de inversión pública.</td></tr>
+    <tr><td class="mono">IV</td><td>El sistema de tesorería: cómo se programa y administra la caja del Estado.</td></tr>
+    <tr><td class="mono">V</td><td>El crédito y la deuda pública: cómo se registran y evalúan los préstamos.</td></tr>
+    <tr><td class="mono">VI</td><td>El sistema de contabilidad pública.</td></tr>
+    <tr><td class="mono">VII</td><td>El control y la evaluación: control interno, externo y el examen de cuentas.</td></tr>
+    <tr><td class="mono">VIII</td><td>Cómo funciona el SIAF (Sistema Integrado de Administración Financiera).</td></tr>
+    <tr><td class="mono">IX–X</td><td>Responsabilidades y disposiciones finales.</td></tr>
+  </table>
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    La ley cubre todo el "ciclo de vida" de la plata pública: de dónde sale, cómo se planea, cómo se gasta, cómo se cuida y cómo se controla que se haya usado bien.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-9">
+  <span class="tag">Tema 9</span>
+  <h3>Cómo se elabora el PGN, paso a paso</h3>
+  <p>Armar el Presupuesto General de la Nación es un proceso de ida y vuelta entre las instituciones, el Ministerio de Economía y Finanzas (MEF) y el Congreso, que se repite cada año dentro de un calendario fijo.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="-90 0 660 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ocho pasos circulares del proceso de formulación del presupuesto">
+      <g font-family="Inter,sans-serif" text-anchor="middle" font-size="9.6">
+        <circle cx="240" cy="240" r="230" fill="none" stroke="#DDE2EA" stroke-width="1.5" stroke-dasharray="2 6"/>
+        <circle cx="240" cy="240" r="58" fill="#152238"/>
+        <text x="240" y="234" fill="#fff" font-family="Fraunces,serif" font-weight="600" font-size="14">PROCESO</text>
+        <text x="240" y="252" fill="#fff" font-family="Fraunces,serif" font-weight="600" font-size="14">DEL PGN</text>
+
+        <!-- step nodes around circle: angle 270 start(top) going clockwise -->
+        <!-- 1 top -->
+        <circle cx="240" cy="60" r="26" fill="#B8862E"/><text x="240" y="64" fill="#fff" font-weight="700" font-size="13">1</text>
+        <text x="240" y="20" fill="#152238" font-weight="700">MEF emite las</text>
+        <text x="240" y="32" fill="#152238" font-weight="700">normas</text>
+
+        <!-- 2 -->
+        <circle cx="390" cy="113" r="26" fill="#152238"/><text x="390" y="117" fill="#fff" font-weight="700" font-size="13">2</text>
+        <text x="390" y="72" fill="#152238" font-weight="700">Entidades presentan</text>
+        <text x="390" y="84" fill="#152238" font-weight="700">proyectos</text>
+
+        <!-- 3 -->
+        <circle cx="443" cy="240" r="26" fill="#152238"/><text x="443" y="244" fill="#fff" font-weight="700" font-size="13">3</text>
+        <text x="443" y="280" fill="#152238" font-weight="700">Envían el proyecto</text>
+        <text x="443" y="292" fill="#152238" font-weight="700">al MEF</text>
+
+        <!-- 4 -->
+        <circle cx="390" cy="367" r="26" fill="#152238"/><text x="390" y="371" fill="#fff" font-weight="700" font-size="13">4</text>
+        <text x="390" y="409" fill="#152238" font-weight="700">MEF analiza e</text>
+        <text x="390" y="421" fill="#152238" font-weight="700">integra el proyecto</text>
+
+        <!-- 5 -->
+        <circle cx="240" cy="420" r="26" fill="#152238"/><text x="240" y="424" fill="#fff" font-weight="700" font-size="13">5</text>
+        <text x="240" y="458" fill="#152238" font-weight="700">Se presenta al</text>
+        <text x="240" y="470" fill="#152238" font-weight="700">Congreso</text>
+
+        <!-- 6 -->
+        <circle cx="90" cy="367" r="26" fill="#152238"/><text x="90" y="371" fill="#fff" font-weight="700" font-size="13">6</text>
+        <text x="90" y="409" fill="#152238" font-weight="700">Congreso estudia,</text>
+        <text x="90" y="421" fill="#152238" font-weight="700">evalúa y ajusta</text>
+
+        <!-- 7 -->
+        <circle cx="37" cy="240" r="26" fill="#152238"/><text x="37" y="244" fill="#fff" font-weight="700" font-size="13">7</text>
+        <text x="37" y="280" fill="#152238" font-weight="700">Congreso aprueba</text>
+        <text x="37" y="292" fill="#152238" font-weight="700">y remite</text>
+
+        <!-- 8 -->
+        <circle cx="90" cy="113" r="26" fill="#152238"/><text x="90" y="117" fill="#fff" font-weight="700" font-size="13">8</text>
+        <text x="90" y="72" fill="#152238" font-weight="700">Poder Ejecutivo</text>
+        <text x="90" y="84" fill="#152238" font-weight="700">promulga la ley</text>
+      </g>
+    </svg>
+    <p class="diagram-cap">El ciclo vuelve a empezar cada año: apenas se promulga un PGN, ya se está preparando el del año siguiente.</p>
+  </div>
+
+  <h4>El calendario que no se puede saltar</h4>
+  <div class="diagram-box">
+    <svg viewBox="0 0 780 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Calendario del proceso de formulación presupuestaria de enero a diciembre">
+      <g font-family="Inter,sans-serif">
+        <rect x="10" y="60" width="760" height="14" rx="7" fill="#EEF1F7"/>
+        <rect x="10" y="60" width="760" height="14" rx="7" fill="none" stroke="#DDE2EA"/>
+        <!-- markers -->
+        <g font-size="9.5" text-anchor="middle">
+          <circle cx="160" cy="67" r="6" fill="#B8862E"/>
+          <text x="160" y="45" fill="#152238" font-weight="700">30 abril</text>
+          <text x="160" y="98" fill="#4C5568">Entrega de</text>
+          <text x="160" y="109" fill="#4C5568">anteproyectos</text>
+
+          <circle cx="300" cy="67" r="6" fill="#B8862E"/>
+          <text x="300" y="45" fill="#152238" font-weight="700">30 junio</text>
+          <text x="300" y="98" fill="#4C5568">Presentación del</text>
+          <text x="300" y="109" fill="#4C5568">proyecto de PGN</text>
+
+          <circle cx="400" cy="67" r="6" fill="#152238"/>
+          <text x="400" y="45" fill="#152238" font-weight="700">1 set.</text>
+          <text x="400" y="98" fill="#4C5568">Estudio y dictamen</text>
+          <text x="400" y="109" fill="#4C5568">de la Comisión Bicameral</text>
+
+          <circle cx="540" cy="67" r="6" fill="#152238"/>
+          <text x="540" y="45" fill="#152238" font-weight="700">30 oct.</text>
+          <text x="540" y="98" fill="#4C5568">Diputados y</text>
+          <text x="540" y="109" fill="#4C5568">Senadores revisan</text>
+
+          <circle cx="660" cy="67" r="6" fill="#152238"/>
+          <text x="660" y="45" fill="#152238" font-weight="700">30 nov.</text>
+          <text x="660" y="98" fill="#4C5568">Plazo constitucional</text>
+          <text x="660" y="109" fill="#4C5568">de aprobación</text>
+
+          <circle cx="740" cy="67" r="6" fill="#B8862E"/>
+          <text x="740" y="45" fill="#152238" font-weight="700">20 dic.</text>
+          <text x="740" y="98" fill="#4C5568">Promulgación</text>
+          <text x="740" y="109" fill="#4C5568">del PGN</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Cada institución arma su propio pedido, el MEF junta todo en un solo proyecto, el Congreso lo revisa y ajusta, y recién ahí el Poder Ejecutivo lo promulga. Todo el año tiene fechas límite marcadas por la Constitución y la ley.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-10">
+  <span class="tag">Tema 10</span>
+  <h3>El PGN 2026, en números</h3>
+  <p>Para bajar todo esto a un caso real: así quedó compuesto el Presupuesto General de la Nación vigente para 2026.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0;font-size:1rem;color:var(--navy);">¿Quién administra los G. 149,6 billones aprobados?</h4>
+      <table style="margin:0;">
+        <tr><th>Grupo</th><th>Monto</th><th>%</th></tr>
+        <tr><td>Administración Central</td><td class="num">G. 75,0 billones</td><td class="num">50,1%</td></tr>
+        <tr><td>Entidades Descentralizadas</td><td class="num">G. 74,7 billones</td><td class="num">49,9%</td></tr>
+      </table>
+      <p style="font-size:.85rem;margin-top:.8em;margin-bottom:0;color:var(--ink-soft);">Con las modificaciones del año, el presupuesto vigente sube a <strong>G. 154,1 billones</strong> (+3%).</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0;font-size:1rem;color:var(--navy);">¿De dónde sale la plata?</h4>
+      <table style="margin:0;">
+        <tr><th>Fuente</th><th>Total</th></tr>
+        <tr><td>Tesoro (impuestos y rentas)</td><td class="num">G. 52,4 billones</td></tr>
+        <tr><td>Crédito público (préstamos)</td><td class="num">G. 22,5 billones</td></tr>
+        <tr><td>Institucional (recursos propios)</td><td class="num">G. 79,2 billones</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    La mitad del presupuesto lo maneja la Administración Central (ministerios, poderes del Estado) y la otra mitad las entidades descentralizadas (como IPS, ANDE, BNF). La mayor porción de financiamiento no viene del Tesoro directamente, sino de recursos propios de cada institución.
+  </div>
+</section>
+
+<section class="lesson p1" id="p1-11">
+  <span class="tag">Tema 11</span>
+  <h3>Hacia dónde va el PGN 2027</h3>
+  <p>Cada nuevo presupuesto se arma siguiendo lineamientos estratégicos. Para el PGN 2027, el Ministerio de Economía y Finanzas definió cuatro pilares:</p>
+
+  <div class="grid2">
+    <div class="minicard"><h4>⚖️ 1. Sostenibilidad fiscal</h4><p>La programación debe cuidar el equilibrio fiscal y la sostenibilidad financiera de mediano plazo.</p></div>
+    <div class="minicard"><h4>🎯 2. Calidad del gasto</h4><p>Priorizar intervenciones estratégicas y usar mejor los recursos, generando más valor público.</p></div>
+    <div class="minicard"><h4>📈 3. Presupuesto por resultados</h4><p>Fortalecer la relación entre planificación, metas, indicadores y resultados.</p></div>
+    <div class="minicard"><h4>⚙️ 4. Gestión integrada</h4><p>Promover la planificación integrada, la trazabilidad y una gestión basada en información.</p></div>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    El objetivo no es solo gastar de forma ordenada, sino gastar mejor: priorizando lo estratégico, midiendo resultados y usando información real para decidir.
+  </div>
+</section>
+
+<div class="part-divider teal">
+  <div class="num">02</div>
+  <div class="txt">
+    <div class="kicker">Parte 2</div>
+    <h2>El Clasificador Presupuestario</h2>
+    <p>La "etiqueta" que ordena cada guaraní que gasta el Estado, para que se pueda entender, comparar y controlar.</p>
+  </div>
+</div>
+
+<section class="lesson p2" id="p2-1">
+  <span class="tag">Tema 1</span>
+  <h3>¿Qué es el Clasificador Presupuestario?</h3>
+  <p>Imaginate que cada institución del Estado anotara sus gastos como quisiera: una en una libreta, otra en una planilla con sus propios nombres, otra de memoria. Sería imposible comparar, sumar o controlar nada. Para evitar ese caos, existe el <strong>Clasificador Presupuestario</strong>: un sistema único de categorías para ordenar, registrar y analizar todos los ingresos y gastos del Presupuesto General de la Nación.</p>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Es el "idioma común" que usan todas las instituciones del Estado para anotar en qué gastan la plata, de modo que todo se pueda sumar, comparar y controlar de la misma manera.
+  </div>
+
+  <h4>¿Para qué sirve, exactamente?</h4>
+  <div class="grid2">
+    <div class="minicard"><h4>Identifica el origen y destino</h4><p>Permite saber de dónde vienen los recursos y cómo se utilizan.</p></div>
+    <div class="minicard"><h4>Conecta planificar con presupuestar</h4><p>Facilita que lo planificado y lo presupuestado hablen el mismo idioma.</p></div>
+    <div class="minicard"><h4>Ordena las transacciones</h4><p>Agrupa el gasto del Estado en categorías claras y homogéneas.</p></div>
+    <div class="minicard"><h4>Ayuda a decidir</h4><p>Es la base para tomar decisiones de política fiscal y gasto público.</p></div>
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-2">
+  <span class="tag">Tema 2</span>
+  <h3>Cómo trabaja el Clasificador</h3>
+  <p>El Clasificador no es solo una lista: cumple varias funciones a la vez sobre la misma información.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 -22 560 302" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="El Clasificador Presupuestario ordena, analiza, controla, evalúa y registra">
+      <circle cx="280" cy="140" r="76" fill="#2E6F6B"/>
+      <text x="280" y="133" text-anchor="middle" fill="#fff" font-family="Fraunces,serif" font-weight="600" font-size="15">CLASIFICADOR</text>
+      <text x="280" y="153" text-anchor="middle" fill="#fff" font-family="Fraunces,serif" font-weight="600" font-size="15">PRESUPUESTARIO</text>
+
+      <g font-family="Inter,sans-serif" text-anchor="middle" font-size="10.3" font-weight="700" fill="#152238">
+        <line x1="280" y1="64" x2="280" y2="41" stroke="#B0D6D2" stroke-width="2"/>
+        <circle cx="280" cy="12" r="28" fill="#fff" stroke="#2E6F6B" stroke-width="2"/>
+        <text x="280" y="16">Ordenar</text>
+
+        <line x1="338" y1="87" x2="360" y2="66" stroke="#B0D6D2" stroke-width="2"/>
+        <circle cx="392" cy="44" r="28" fill="#fff" stroke="#2E6F6B" stroke-width="2"/>
+        <text x="392" y="48">Analizar</text>
+
+        <line x1="347" y1="184" x2="376" y2="207" stroke="#B0D6D2" stroke-width="2"/>
+        <circle cx="410" cy="234" r="28" fill="#fff" stroke="#2E6F6B" stroke-width="2"/>
+        <text x="410" y="238">Controlar</text>
+
+        <line x1="213" y1="184" x2="184" y2="207" stroke="#B0D6D2" stroke-width="2"/>
+        <circle cx="150" cy="234" r="28" fill="#fff" stroke="#2E6F6B" stroke-width="2"/>
+        <text x="150" y="238">Evaluar</text>
+
+        <line x1="222" y1="87" x2="200" y2="66" stroke="#B0D6D2" stroke-width="2"/>
+        <circle cx="168" cy="44" r="28" fill="#fff" stroke="#2E6F6B" stroke-width="2"/>
+        <text x="168" y="48">Registrar</text>
+      </g>
+    </svg>
+  </div>
+
+  <h4>¿Por qué es tan importante?</h4>
+  <div class="grid3">
+    <div class="minicard"><h4>🧩 Orden sistemático</h4><p>Evita duplicar gastos.</p></div>
+    <div class="minicard"><h4>🔍 Transparencia</h4><p>Permite saber en qué se gasta cada guaraní.</p></div>
+    <div class="minicard"><h4>📋 Evaluación</h4><p>Ayuda a medir resultados y rendir cuentas.</p></div>
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-3">
+  <span class="tag">Tema 3</span>
+  <h3>Las cinco preguntas que responde cada gasto</h3>
+  <p>Cada vez que el Estado gasta un guaraní, ese gasto se puede mirar desde cinco ángulos distintos. Este es el mapa conceptual completo, y es la base de todo lo que sigue en esta guía:</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 700 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa conceptual de las cinco clasificaciones del gasto público">
+      <g font-family="Inter,sans-serif">
+        <rect x="270" y="185" width="160" height="50" rx="12" fill="#152238"/>
+        <text x="350" y="207" text-anchor="middle" fill="#fff" font-weight="700" font-size="12">UN GASTO</text>
+        <text x="350" y="222" text-anchor="middle" fill="#fff" font-size="10">del Estado</text>
+
+        <!-- branch template -->
+        <!-- Institucional: top-left -->
+        <line x1="270" y1="195" x2="110" y2="75" stroke="#9AA3B5" stroke-width="1.5"/>
+        <rect x="15" y="35" width="195" height="70" rx="10" fill="#fff" stroke="#2E6F6B" stroke-width="1.5"/>
+        <text x="112" y="55" text-anchor="middle" font-weight="700" font-size="11.5" fill="#1c4a47">¿Quién gasta?</text>
+        <text x="112" y="69" text-anchor="middle" font-size="10" fill="#4C5568">Institucional</text>
+        <text x="112" y="86" text-anchor="middle" font-size="8.8" fill="#4C5568">MEC, MSPBS, IPS...</text>
+
+        <!-- Funcional: top-right -->
+        <line x1="430" y1="195" x2="590" y2="75" stroke="#9AA3B5" stroke-width="1.5"/>
+        <rect x="490" y="35" width="195" height="70" rx="10" fill="#fff" stroke="#2E6F6B" stroke-width="1.5"/>
+        <text x="587" y="55" text-anchor="middle" font-weight="700" font-size="11.5" fill="#1c4a47">¿Para qué?</text>
+        <text x="587" y="69" text-anchor="middle" font-size="10" fill="#4C5568">Funcional</text>
+        <text x="587" y="86" text-anchor="middle" font-size="8.8" fill="#4C5568">Salud, Educación, Defensa...</text>
+
+        <!-- Programatica: left -->
+        <line x1="270" y1="220" x2="110" y2="270" stroke="#9AA3B5" stroke-width="1.5"/>
+        <rect x="10" y="250" width="200" height="70" rx="10" fill="#fff" stroke="#2E6F6B" stroke-width="1.5"/>
+        <text x="110" y="270" text-anchor="middle" font-weight="700" font-size="11.5" fill="#1c4a47">¿En qué programa?</text>
+        <text x="110" y="284" text-anchor="middle" font-size="10" fill="#4C5568">Programática</text>
+        <text x="110" y="301" text-anchor="middle" font-size="8.8" fill="#4C5568">Programa Central, Sustantivo...</text>
+
+        <!-- Economica: right -->
+        <line x1="430" y1="220" x2="590" y2="270" stroke="#9AA3B5" stroke-width="1.5"/>
+        <rect x="490" y="250" width="200" height="70" rx="10" fill="#fff" stroke="#2E6F6B" stroke-width="1.5"/>
+        <text x="590" y="270" text-anchor="middle" font-weight="700" font-size="11.5" fill="#1c4a47">¿Qué tipo de gasto?</text>
+        <text x="590" y="284" text-anchor="middle" font-size="10" fill="#4C5568">Económica</text>
+        <text x="590" y="301" text-anchor="middle" font-size="8.8" fill="#4C5568">Corriente, Capital, Financiamiento</text>
+
+        <!-- Fuente financiamiento: bottom -->
+        <line x1="350" y1="235" x2="350" y2="345" stroke="#9AA3B5" stroke-width="1.5"/>
+        <rect x="240" y="345" width="220" height="60" rx="10" fill="#DCEEEC" stroke="#2E6F6B" stroke-width="1.5"/>
+        <text x="350" y="367" text-anchor="middle" font-weight="700" font-size="11.5" fill="#1c4a47">¿Con qué plata?</text>
+        <text x="350" y="381" text-anchor="middle" font-size="10" fill="#1c4a47">Fuente de Financiamiento</text>
+        <text x="350" y="396" text-anchor="middle" font-size="8.8" fill="#3a6e6a">FF10 Tesoro · FF20 Crédito · FF30 Institucional</text>
+      </g>
+    </svg>
+    <p class="diagram-cap">Todo gasto público se puede describir respondiendo estas cinco preguntas a la vez. En las próximas secciones vemos cada una en detalle.</p>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Cada gasto tiene, al mismo tiempo, una institución responsable, una función, un programa, un tipo económico y una fuente de financiamiento. No son alternativas: son cinco etiquetas que se ponen todas juntas sobre el mismo gasto.
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-4">
+  <span class="tag">Tema 4</span>
+  <h3>1) Clasificación Institucional: ¿quién gasta?</h3>
+  <p>Organiza el presupuesto según la institución del Estado que administra los recursos. Es la forma más simple de clasificar: cada guaraní se le asigna a la entidad responsable.</p>
+  <div class="grid3">
+    <div class="minicard"><h4>Gobierno Central</h4><p>Ministerio de Economía y Finanzas, Ministerio de Salud, Ministerio de Educación...</p></div>
+    <div class="minicard"><h4>Entidades Descentralizadas</h4><p>IPS, SENASA, ESSAP...</p></div>
+    <div class="minicard"><h4>Gobiernos Locales</h4><p>Municipalidades.</p></div>
+  </div>
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Es simplemente responder: "¿de qué institución sale esta plata?"
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-5">
+  <span class="tag">Tema 5</span>
+  <h3>2) Clasificación Funcional: ¿para qué?</h3>
+  <p>Agrupa el gasto según la función o el propósito que cumple dentro de la política pública, sin importar qué institución lo ejecute. Por ejemplo, gasto en salud puede venir del MSPBS, de una gobernación o de una entidad de seguridad social: todo se suma bajo "Servicios Sociales - Salud".</p>
+
+  <div class="card">
+    <table style="margin:0;">
+      <tr><th>Función</th><th>Monto aproximado</th></tr>
+      <tr><td>Servicios Sociales (salud, educación, seguridad social, protección)</td><td class="num">G. 40,1 billones</td></tr>
+      <tr><td>Servicios Económicos</td><td class="num">G. 31,7 billones</td></tr>
+      <tr><td>Servicios de la Deuda Pública</td><td class="num">G. 9,2 billones</td></tr>
+      <tr><td>Administración Gubernamental</td><td class="num">G. 5,4 billones</td></tr>
+      <tr><td>Servicios de Seguridad</td><td class="num">G. 5,3 billones</td></tr>
+      <tr><td>Regulación y Control</td><td class="num">G. 476 mil millones</td></tr>
+    </table>
+    <p style="font-size:.85rem;margin:.8em 0 0 0;color:var(--ink-soft);">Dentro de "Servicios Sociales", la mayor parte va a Salud y Seguridad Social, seguidas de Educación.</p>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    No importa qué institución gaste: la clasificación funcional junta todo el gasto en salud por un lado, todo el gasto en educación por otro, y así con cada función del Estado.
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-6">
+  <span class="tag">Tema 6</span>
+  <h3>3) Clasificación Programática: ¿en qué programa?</h3>
+  <p>Agrupa el presupuesto en programas y proyectos específicos, alineados con los objetivos estratégicos del gobierno. Existen tres clases de programas:</p>
+  <div class="grid3">
+    <div class="minicard"><h4>Programa Central</h4><p>Las funciones de conducción y administración general de una institución.</p></div>
+    <div class="minicard"><h4>Programa Sustantivo</h4><p>Los programas que producen directamente los bienes y servicios para la ciudadanía.</p></div>
+    <div class="minicard"><h4>Partidas no asignables</h4><p>Gastos que no se pueden repartir entre programas específicos.</p></div>
+  </div>
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Permite responder "¿a qué programa concreto pertenece este gasto?", asegurando que los recursos se usen en programas prioritarios y no se pierdan en el camino.
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-7">
+  <span class="tag">Tema 7</span>
+  <h3>4) Clasificación Económica: ¿qué tipo de gasto es?</h3>
+  <p>Esta es, probablemente, la clasificación más usada en la práctica: organiza los ingresos y gastos según su naturaleza económica.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h4 style="margin-top:0;font-size:1rem;">Del lado de los ingresos</h4>
+      <ol style="margin-bottom:0;">
+        <li><strong>Ingresos Corrientes</strong> — impuestos, tasas, contribuciones.</li>
+        <li><strong>Ingresos de Capital</strong> — venta de activos, donaciones.</li>
+        <li><strong>Recursos de Financiamiento</strong> — créditos, emisión de bonos.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0;font-size:1rem;">Del lado de los gastos</h4>
+      <ol style="margin-bottom:0;">
+        <li><strong>Gasto Corriente</strong> — sueldos, bienes y servicios, transferencias.</li>
+        <li><strong>Gasto de Capital</strong> — infraestructura, inversiones públicas.</li>
+        <li><strong>Financiamiento</strong> — pago de intereses y amortización de préstamos.</li>
+      </ol>
+    </div>
+  </div>
+
+  <h4>Los tres tipos de gasto, explicados</h4>
+  <div class="grid3">
+    <div class="minicard">
+      <h4>💳 Gasto corriente</h4>
+      <p>Cubre el funcionamiento del día a día: sueldos, servicios de la deuda, transferencias corrientes y otros gastos operativos.</p>
+    </div>
+    <div class="minicard">
+      <h4>🏗️ Gasto de capital</h4>
+      <p>Compra o construye bienes que aumentan el patrimonio del Estado: obras, equipos, inversiones que quedan para el futuro.</p>
+    </div>
+    <div class="minicard">
+      <h4>🏦 Gasto de financiamiento</h4>
+      <p>Es para pagar deudas: amortización de capital, servicio de la deuda y otros compromisos financieros.</p>
+    </div>
+  </div>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Distribución del gasto por tipo económico: 59% corriente, 37% capital, 4% financiamiento">
+      <g transform="translate(140,110)">
+        <circle r="80" fill="#EEF1F7"/>
+        <!-- corriente 59% -->
+        <path d="M0,0 L0,-80 A80,80 0 1 1 -78.6,-15.9 Z" fill="#152238"/>
+        <!-- capital 37% -->
+        <path d="M0,0 L-78.6,-15.9 A80,80 0 0 1 -14.4,-78.7 Z" fill="#B8862E"/>
+        <!-- financiamiento 4% -->
+        <path d="M0,0 L-14.4,-78.7 A80,80 0 0 1 0,-80 Z" fill="#2E6F6B"/>
+        <circle r="42" fill="#F6F7FA"/>
+      </g>
+      <g font-family="Inter,sans-serif" font-size="12.5">
+        <rect x="260" y="52" width="14" height="14" fill="#152238"/>
+        <text x="280" y="64" fill="#1B2130">Corriente — 59%</text>
+        <rect x="260" y="98" width="14" height="14" fill="#B8862E"/>
+        <text x="280" y="110" fill="#1B2130">Capital — 37%</text>
+        <rect x="260" y="144" width="14" height="14" fill="#2E6F6B"/>
+        <text x="280" y="156" fill="#1B2130">Financiamiento — 4%</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Cuando alguien pregunta "¿es gasto corriente o de capital?", en realidad está preguntando si la plata se usó para el funcionamiento diario (corriente) o para construir/comprar algo que queda (capital), o si se destinó a pagar deudas (financiamiento).
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-8">
+  <span class="tag">Tema 8</span>
+  <h3>Ponte a prueba: ¿corriente, capital o financiamiento?</h3>
+  <p>Probá clasificar estos seis gastos reales antes de ver la respuesta. Tocá cada tarjeta para revisarla.</p>
+
+  <details class="quiz">
+    <summary>Pago a médicos del hospital</summary>
+    <div class="answer"><strong>Gasto corriente.</strong> Es un sueldo: paga el funcionamiento diario del servicio de salud, no crea un bien nuevo para el Estado.</div>
+  </details>
+  <details class="quiz">
+    <summary>Construcción de un puente</summary>
+    <div class="answer"><strong>Gasto de capital.</strong> Crea infraestructura nueva que queda como activo del Estado.</div>
+  </details>
+  <details class="quiz">
+    <summary>Compra de computadoras para oficinas públicas</summary>
+    <div class="answer"><strong>Gasto de capital.</strong> Es la adquisición de un bien que incrementa el patrimonio de la institución.</div>
+  </details>
+  <details class="quiz">
+    <summary>Subsidio a adultos mayores</summary>
+    <div class="answer"><strong>Gasto corriente.</strong> Es una transferencia que no involucra construir ni comprar un bien de capital.</div>
+  </details>
+  <details class="quiz">
+    <summary>Pago de intereses de bonos</summary>
+    <div class="answer"><strong>Gasto de financiamiento.</strong> Corresponde al servicio de la deuda pública.</div>
+  </details>
+  <details class="quiz">
+    <summary>Servicio tercerizado de vigilancia</summary>
+    <div class="answer"><strong>Gasto corriente.</strong> Es un servicio contratado para el funcionamiento habitual, no una inversión.</div>
+  </details>
+</section>
+
+<section class="lesson p2" id="p2-9">
+  <span class="tag">Tema 9</span>
+  <h3>5) Clasificación por Fuente de Financiamiento: ¿con qué plata?</h3>
+  <p>Distingue el origen de los fondos que se usan en el presupuesto. Es clave porque una misma institución puede financiar distintos gastos con distintas "billeteras".</p>
+
+  <div class="grid3">
+    <div class="minicard">
+      <h4><span class="mono" style="background:var(--navy);color:#fff;padding:.1em .4em;border-radius:5px;">FF10</span> Recursos del Tesoro</h4>
+      <p>Lo recaudado y administrado por la Tesorería General (impuestos, principalmente), destinado a financiar gastos e inversiones del Estado.</p>
+    </div>
+    <div class="minicard">
+      <h4><span class="mono" style="background:var(--navy);color:#fff;padding:.1em .4em;border-radius:5px;">FF20</span> Recursos del Crédito</h4>
+      <p>Vienen del endeudamiento público, interno o externo: préstamos y emisión de títulos y valores.</p>
+    </div>
+    <div class="minicard">
+      <h4><span class="mono" style="background:var(--navy);color:#fff;padding:.1em .4em;border-radius:5px;">FF30</span> Recursos Institucionales</h4>
+      <p>Le pertenecen a cada organismo: coparticipaciones, transferencias, donaciones o ingresos propios por bienes y servicios.</p>
+    </div>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    No toda la plata del Estado sale del mismo lugar. Algunas cosas se pagan con impuestos (FF10), otras con préstamos (FF20), y otras con lo que cada institución genera por su cuenta (FF30).
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-10">
+  <span class="tag">Tema 10</span>
+  <h3>El detalle línea por línea: objeto del gasto</h3>
+  <p>Dentro de la clasificación económica hay un nivel mucho más fino: el <strong>objeto del gasto</strong>, que dice exactamente en qué bien o servicio se gastó cada guaraní. Funciona como una carpeta que se abre en subcarpetas cada vez más específicas.</p>
+
+  <div class="diagram-box">
+    <svg viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Jerarquía del objeto del gasto: grupo 100, subgrupo 110, objeto 111 sueldo">
+      <g font-family="Inter,sans-serif" text-anchor="middle">
+        <rect x="10" y="20" width="160" height="120" rx="12" fill="#152238"/>
+        <text x="90" y="55" fill="#fff" font-weight="700" font-size="20" font-family="Fraunces,serif">100</text>
+        <text x="90" y="78" fill="#DCE3F0" font-size="10.5">GRUPO</text>
+        <text x="90" y="100" fill="#fff" font-size="11" font-weight="600">Servicios</text>
+        <text x="90" y="114" fill="#fff" font-size="11" font-weight="600">Personales</text>
+
+        <text x="192" y="85" font-size="20" fill="#B8862E">→</text>
+
+        <rect x="210" y="20" width="160" height="120" rx="12" fill="#B8862E"/>
+        <text x="290" y="55" fill="#fff" font-weight="700" font-size="20" font-family="Fraunces,serif">110</text>
+        <text x="290" y="78" fill="#FBEFDA" font-size="10.5">SUBGRUPO</text>
+        <text x="290" y="100" fill="#fff" font-size="11" font-weight="600">Remuneraciones</text>
+        <text x="290" y="114" fill="#fff" font-size="11" font-weight="600">Básicas</text>
+
+        <text x="392" y="85" font-size="20" fill="#2E6F6B">→</text>
+
+        <rect x="410" y="20" width="140" height="120" rx="12" fill="#2E6F6B"/>
+        <text x="480" y="55" fill="#fff" font-weight="700" font-size="20" font-family="Fraunces,serif">111</text>
+        <text x="480" y="78" fill="#D7ECEA" font-size="10.5">OBJETO</text>
+        <text x="480" y="100" fill="#fff" font-size="11" font-weight="600">Sueldo</text>
+      </g>
+    </svg>
+    <p class="diagram-cap">Cada gasto real usa el código completo: primero el grupo, después el subgrupo, y por último el objeto específico.</p>
+  </div>
+
+  <p>El Clasificador tiene nueve grandes grupos de gasto:</p>
+  <table>
+    <tr><th>Grupo</th><th>Qué incluye</th></tr>
+    <tr><td class="mono">100</td><td>Servicios Personales — sueldos y remuneraciones de funcionarios.</td></tr>
+    <tr><td class="mono">200</td><td>Servicios No Personales — luz, agua, viáticos, alquileres, mantenimiento.</td></tr>
+    <tr><td class="mono">300</td><td>Bienes de Consumo e Insumos — alimentos, papelería, medicamentos, combustibles.</td></tr>
+    <tr><td class="mono">400</td><td>Bienes de Cambio — materia prima para producir bienes o servicios que se venden.</td></tr>
+    <tr><td class="mono">500</td><td>Inversión Física — construcciones, maquinaria, equipos.</td></tr>
+    <tr><td class="mono">600</td><td>Inversión Financiera — préstamos otorgados, depósitos, compra de títulos.</td></tr>
+    <tr><td class="mono">700</td><td>Servicio de la Deuda Pública — intereses y amortizaciones.</td></tr>
+    <tr><td class="mono">800</td><td>Transferencias — becas, jubilaciones, aportes a municipios u ONG.</td></tr>
+    <tr><td class="mono">900</td><td>Otros Gastos — impuestos, devoluciones, gastos reservados.</td></tr>
+  </table>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Si la clasificación económica te dice "es gasto corriente", el objeto del gasto te dice exactamente qué se compró: por ejemplo, dentro de "Servicios Personales" (100), el sueldo (111) es apenas una de las docenas de líneas posibles.
+  </div>
+</section>
+
+<section class="lesson p2" id="p2-11">
+  <span class="tag">Tema 11</span>
+  <h3>Ejemplo completo: todo el Clasificador en un solo caso</h3>
+  <p>Veamos cómo se aplican, todas juntas, las cinco clasificaciones que vimos en esta guía, con un caso real.</p>
+
+  <div class="card" style="background:var(--teal-soft); border-color:var(--teal);">
+    <p style="margin:0 0 .8em 0;"><strong>Caso:</strong> la Gobernación de Paraguarí solicita recursos para el programa "Almuerzo Escolar en Comunidades Rurales" (3er grado), financiado con el Tesoro.</p>
+    <table style="margin:0;background:transparent;">
+      <tr><td style="width:45%;"><strong>¿Quién gasta?</strong> (Institucional)</td><td>Gobierno Departamental de Paraguarí</td></tr>
+      <tr><td><strong>¿Para qué?</strong> (Funcional)</td><td>Educación — servicios sociales</td></tr>
+      <tr><td><strong>¿En qué programa?</strong> (Programática)</td><td>Alimentación Escolar — Programa Central</td></tr>
+      <tr><td><strong>¿Qué tipo de gasto?</strong> (Económica)</td><td>Gasto corriente</td></tr>
+      <tr><td><strong>¿En qué objeto?</strong></td><td class="mono">848 — Transferencias para Alimentación Escolar y Control Sanitario</td></tr>
+      <tr><td><strong>¿Con qué plata?</strong> (Fuente)</td><td class="mono">FF10 — Recursos del Tesoro</td></tr>
+    </table>
+  </div>
+
+  <div class="simple">
+    <span class="lbl">En simple</span>
+    Un solo gasto —darle de comer a chicos de una escuela rural— queda completamente identificado respondiendo las cinco preguntas del Clasificador. Con eso, cualquier persona puede saber quién gastó, para qué, en qué programa, qué tipo de gasto fue y de dónde salió la plata.
+  </div>
+</section>
+
+<section class="lesson" id="glosario" style="scroll-margin-top:70px;">
+  <span class="tag" style="color:var(--navy);background:var(--paper);border:1px solid var(--line);">Para repasar</span>
+  <h3>Glosario rápido</h3>
+  <table>
+    <tr><th>Término</th><th>Qué significa</th></tr>
+    <tr><td><strong>PGN</strong></td><td>Presupuesto General de la Nación: el presupuesto de todo el Estado paraguayo para un año.</td></tr>
+    <tr><td><strong>MEF</strong></td><td>Ministerio de Economía y Finanzas: arma y coordina el proyecto de presupuesto.</td></tr>
+    <tr><td><strong>Gasto corriente</strong></td><td>Gasto para el funcionamiento diario (sueldos, servicios, transferencias).</td></tr>
+    <tr><td><strong>Gasto de capital</strong></td><td>Gasto que crea o compra un bien que queda como patrimonio del Estado.</td></tr>
+    <tr><td><strong>FF10 / FF20 / FF30</strong></td><td>Códigos de fuente de financiamiento: Tesoro, Crédito Público e Institucional.</td></tr>
+    <tr><td><strong>Objeto del gasto</strong></td><td>El código más específico que dice exactamente en qué bien o servicio se gastó la plata.</td></tr>
+    <tr><td><strong>Presupuesto por Resultados (PpR)</strong></td><td>Enfoque que conecta los recursos con los productos, efectos e impactos que se buscan lograr.</td></tr>
+  </table>
+</section>
+
+</main>
+</div>
+
+<footer>
+  <p>Guía de estudio elaborada a partir de los materiales "Finanzas Públicas — Presupuesto y Calidad del Gasto" (Clase 1) y "Clasificador Presupuestario", de la Academia Diplomática y Consular del Paraguay. Contenido resumido y reescrito en lenguaje simple con fines de estudio.</p>
+</footer>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const tocNav = document.getElementById('tocNav');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = tocNav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', isOpen);
+    menuBtn.textContent = isOpen ? '✕' : '☰';
+  });
+  tocNav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth <= 900) {
+        tocNav.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', false);
+        menuBtn.textContent = '☰';
+      }
+    });
+  });
+
+  // scroll-spy
+  const sections = Array.from(document.querySelectorAll('section.lesson[id]'));
+  const links = Array.from(document.querySelectorAll('nav.toc a'));
+  const byId = id => links.find(l => l.getAttribute('href') === '#' + id);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const link = byId(entry.target.id);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
