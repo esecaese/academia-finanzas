@@ -287,12 +287,26 @@
   .lesson-speak svg{width:13px; height:13px;}
   .lesson-speak.reading{background:var(--gold); border-color:var(--gold); color:#fff;}
 
+  .block-speak-host{position:relative;}
+  .block-speak{
+    position:absolute; top:.5em; right:.5em; z-index:5;
+    width:24px; height:24px; border-radius:50%; border:1px solid var(--line);
+    background:#fff; color:var(--navy); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    opacity:.4; transition:opacity .15s ease, background .15s ease;
+  }
+  .block-speak svg{width:12px; height:12px;}
+  .block-speak:hover, .block-speak:focus-visible{opacity:1;}
+  .block-speak.reading{opacity:1; background:var(--gold); border-color:var(--gold); color:#fff;}
+  table.block-speak-host{margin:1.2em 0;}
+  div.block-speak-host{display:block;}
+
   /* ---------- print / export to PDF (A4) ---------- */
   @media print{
     @page{ size:A4; margin:16mm 14mm; }
     html,body{background:#fff;}
     body{font-size:11.5pt; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
-    .topbar, nav.toc, .tts-fab, .tts-panel, .skip-link, .lesson-speak{display:none !important;}
+    .topbar, nav.toc, .tts-fab, .tts-panel, .skip-link, .lesson-speak, .block-speak{display:none !important;}
     .shell{display:block; max-width:none;}
     main{padding:0;}
     a{color:var(--navy); text-decoration:none;}
@@ -1411,31 +1425,64 @@
     const pauseBtn = document.getElementById('ttsPause');
     const stopBtn = document.getElementById('ttsStop');
 
-    // Build the reading queue: hero + every .lesson section, in document order.
-    const readTargets = [
-      { id: '__hero', label: 'Introducción', el: document.querySelector('.hero') },
-      ...sections.map(s => ({
-        id: s.id,
-        label: s.querySelector('h3') ? s.querySelector('h3').textContent.trim() : s.id,
-        el: s
-      })),
-      { id: 'glosario', label: 'Glosario rápido', el: document.getElementById('glosario') }
-    ];
+    const speakerSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
 
-    function textForSection(el) {
+    // ---- Build the reading queue at BLOCK level (not just per section) ----
+    // Every paragraph, card, diagram, table, mini-card and quiz question is
+    // its own block, so reading can start from literally any point on the page.
+    const contentRoots = [
+      document.querySelector('.hero'),
+      ...sections,
+      document.getElementById('glosario')
+    ].filter(Boolean);
+
+    const blocks = []; // { el, label, kind }
+
+    function labelFor(root) {
+      const h = root.querySelector ? (root.querySelector('h3') || root.querySelector('h1')) : null;
+      return h ? h.textContent.trim() : 'Introducción';
+    }
+
+    contentRoots.forEach(root => {
+      const sectionLabel = labelFor(root);
+      Array.from(root.children).forEach(child => {
+        if (child.classList && child.classList.contains('tag')) return; // small eyebrow label, skip
+        if (child.tagName === 'TABLE') {
+          blocks.push({ el: child, label: sectionLabel, kind: 'table' });
+        } else if (child.classList && (child.classList.contains('grid2') || child.classList.contains('grid3'))) {
+          Array.from(child.children).forEach(card => blocks.push({ el: card, label: sectionLabel, kind: 'card' }));
+        } else if (child.tagName === 'DETAILS' && child.classList.contains('quiz')) {
+          blocks.push({ el: child, label: sectionLabel, kind: 'quiz' });
+        } else {
+          blocks.push({ el: child, label: sectionLabel, kind: child.tagName === 'H3' || child.tagName === 'H1' ? 'title' : 'block' });
+        }
+      });
+    });
+
+    function textForBlock(el, kind) {
       if (!el) return '';
       const clone = el.cloneNode(true);
-      clone.querySelectorAll('svg, script, .lesson-speak').forEach(n => n.remove());
-      // details/quiz: read question and answer together
-      clone.querySelectorAll('details.quiz').forEach(d => {
-        const q = d.querySelector('summary') ? d.querySelector('summary').textContent.trim() : '';
-        const a = d.querySelector('.answer') ? d.querySelector('.answer').textContent.trim() : '';
-        d.textContent = q + '. ' + a;
+      clone.querySelectorAll('.block-speak, .lesson-speak, script').forEach(n => n.remove());
+      clone.querySelectorAll('svg').forEach(svg => {
+        const label = svg.getAttribute('aria-label');
+        svg.replaceWith(document.createTextNode(label ? ('Diagrama: ' + label + '.') : ''));
+      });
+      if (kind === 'quiz') {
+        const q = el.querySelector('summary') ? el.querySelector('summary').textContent.trim() : '';
+        const a = el.querySelector('.answer') ? el.querySelector('.answer').textContent.trim() : '';
+        return (q + '. ' + a).replace(/\s+/g, ' ').trim();
+      }
+      // Give block-level sub-elements (headings, paragraphs, list items, table
+      // cells) a trailing pause so they don't run into each other once
+      // flattened to plain text — e.g. a mini-card's title and description.
+      clone.querySelectorAll('div,p,h1,h2,h3,h4,h5,h6,li,tr,td,th').forEach(node => {
+        const t = node.textContent.trim();
+        if (t && !/[.!?:;]$/.test(t)) node.appendChild(document.createTextNode('. '));
       });
       return clone.textContent.replace(/\s+/g, ' ').trim();
     }
 
-    let queue = [];
+    let queue = blocks;
     let queueIndex = 0;
     let currentUtterance = null;
     let isPaused = false;
@@ -1459,14 +1506,11 @@
         opt.textContent = v.name + ' (' + v.lang + ')';
         voiceSel.appendChild(opt);
       });
-      // Prefer a Latin American Spanish voice by default if available
       const preferred = spanish.findIndex(v => /MX|AR|419|US/i.test(v.lang) || /paulina|juan|diego|sabina/i.test(v.name));
       if (preferred >= 0) voiceSel.selectedIndex = preferred;
     }
     populateVoices();
     speechSynthesis.addEventListener('voiceschanged', populateVoices);
-    // Some browsers (notably Chrome) report voices asynchronously without
-    // firing voiceschanged reliably on first load — poll briefly as a fallback.
     let voicePolls = 0;
     const voicePoll = setInterval(() => {
       voicePolls++;
@@ -1478,17 +1522,18 @@
 
     function setActiveHighlight(el) {
       if (activeEl) activeEl.classList.remove('reading-now');
-      document.querySelectorAll('.lesson-speak.reading').forEach(b => b.classList.remove('reading'));
+      document.querySelectorAll('.block-speak.reading, .lesson-speak.reading').forEach(b => b.classList.remove('reading'));
       activeEl = el;
       if (activeEl) {
         activeEl.classList.add('reading-now');
-        const btn = activeEl.querySelector('.lesson-speak');
+        const btn = activeEl.querySelector('.block-speak, .lesson-speak') ||
+          (activeEl.parentElement && activeEl.parentElement.classList.contains('block-speak-host')
+            ? activeEl.parentElement.querySelector('.block-speak') : null);
         if (btn) btn.classList.add('reading');
       }
     }
 
     function updateControls(state) {
-      // state: 'idle' | 'playing' | 'paused'
       playBtn.disabled = state === 'playing';
       pauseBtn.disabled = state !== 'playing';
       stopBtn.disabled = state === 'idle';
@@ -1503,14 +1548,12 @@
         return;
       }
       const item = queue[queueIndex];
-      const text = textForSection(item.el);
+      const text = textForBlock(item.el, item.kind);
       if (!text) { queueIndex++; speakNext(); return; }
 
       nowEl.textContent = 'Leyendo: ' + item.label;
       setActiveHighlight(item.el);
-      if (item.el && item.id !== '__hero') {
-        item.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+      item.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
       const voices = window.speechSynthesis.getVoices();
       const chosen = voices.find(v => v.name === voiceSel.value);
@@ -1519,21 +1562,15 @@
       if (chosen) currentUtterance.voice = chosen;
       currentUtterance.lang = chosen ? chosen.lang : 'es-ES';
       currentUtterance.rate = parseFloat(rateSel.value);
-      currentUtterance.onend = () => {
-        queueIndex++;
-        speakNext();
-      };
-      currentUtterance.onerror = () => {
-        queueIndex++;
-        speakNext();
-      };
+      currentUtterance.onend = () => { queueIndex++; speakNext(); };
+      currentUtterance.onerror = () => { queueIndex++; speakNext(); };
       window.speechSynthesis.speak(currentUtterance);
       updateControls('playing');
     }
 
     function startFrom(index) {
       window.speechSynthesis.cancel();
-      queue = readTargets;
+      queue = blocks;
       queueIndex = index;
       isPaused = false;
       speakNext();
@@ -1550,11 +1587,7 @@
         updateControls('playing');
         return;
       }
-      if (queue.length === 0) {
-        startFrom(0);
-      } else {
-        startFrom(queueIndex);
-      }
+      startFrom(queueIndex);
     });
 
     pauseBtn.addEventListener('click', () => {
@@ -1565,7 +1598,6 @@
 
     stopBtn.addEventListener('click', () => {
       window.speechSynthesis.cancel();
-      queue = [];
       queueIndex = 0;
       isPaused = false;
       nowEl.textContent = 'Elegí una voz y presioná reproducir.';
@@ -1573,21 +1605,39 @@
       updateControls('idle');
     });
 
-    // Per-section "listen from here" buttons
-    sections.forEach((s, idx) => {
-      const h3 = s.querySelector('h3');
-      if (!h3) return;
+    // ---- Inject a small "escuchar desde acá" icon into every block ----
+    blocks.forEach((item, idx) => {
+      const el = item.el;
       const btn = document.createElement('button');
-      btn.className = 'lesson-speak';
-      btn.title = 'Escuchar desde este tema';
-      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>';
+      btn.title = 'Escuchar desde acá';
+      btn.type = 'button';
+      btn.innerHTML = speakerSvg;
+
+      if (item.kind === 'title') {
+        btn.className = 'lesson-speak';
+        el.appendChild(btn);
+      } else if (item.kind === 'table' || item.kind === 'quiz') {
+        // <details> hides its non-summary children internally even when we
+        // force `display` on them, so the speak icon must live OUTSIDE the
+        // element (and likewise for <table>, which can't hold a <button>).
+        const wrap = document.createElement('div');
+        wrap.className = 'block-speak-host';
+        el.parentNode.insertBefore(wrap, el);
+        wrap.appendChild(el);
+        btn.className = 'block-speak';
+        wrap.appendChild(btn);
+      } else {
+        el.classList.add('block-speak-host');
+        btn.className = 'block-speak';
+        el.appendChild(btn);
+      }
+
       btn.addEventListener('click', (e) => {
         e.preventDefault();
+        e.stopPropagation();
         panel.classList.add('open');
-        const targetIndex = readTargets.findIndex(t => t.id === s.id);
-        startFrom(targetIndex >= 0 ? targetIndex : 0);
+        startFrom(idx);
       });
-      h3.appendChild(btn);
     });
   })();
 </script>
