@@ -229,8 +229,9 @@
     display:flex; align-items:center; gap:.45em;
     background:var(--paper-2); border:1px solid var(--line); border-radius:9px;
     padding:.45em .8em; font-family:'Inter',sans-serif; font-size:.82rem; font-weight:600;
-    color:var(--navy); cursor:pointer;
+    color:var(--navy); cursor:pointer; text-decoration:none;
   }
+  .btn-action.accent{background:var(--gold-soft); border-color:var(--gold); color:var(--navy);}
   .btn-action:hover{border-color:var(--navy-2);}
   .btn-action svg{width:16px; height:16px; flex:none;}
   @media(max-width:560px){
@@ -333,6 +334,10 @@
 <div class="topbar">
   <div class="brand">Finanzas Públicas <small>· Guía de estudio</small></div>
   <div class="actions">
+    <a class="btn-action accent" href="test.html" title="Autoevaluación: quiz de opción múltiple">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a2.9 2.9 0 0 1 5.7 1c0 1.9-2.8 1.9-2.8 3.9"/><path d="M12 17h.01"/></svg>
+      <span class="lbl-full">Autoevaluación</span>
+    </a>
     <button class="btn-action" id="pdfBtn" title="Exportar a PDF (A4)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z"/><path d="M14 2v5h5"/><path d="M9 15h1.5a1.5 1.5 0 0 0 0-3H9v5"/><path d="M13.5 12v5h1a1.5 1.5 0 0 0 1.5-1.5v-2a1.5 1.5 0 0 0-1.5-1.5h-1Z"/><path d="M20.5 12h-2v5"/><path d="M18.5 14.2h1.6"/></svg>
       <span class="lbl-full">Exportar a PDF</span>

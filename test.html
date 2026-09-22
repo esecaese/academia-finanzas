@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoevaluación · Finanzas Públicas y Clasificador Presupuestario</title>
+<meta name="description" content="Juego de preguntas de opción múltiple, con banco de más de 60 preguntas, para autoevaluarte sobre finanzas públicas, el ciclo presupuestario y el Clasificador Presupuestario de Paraguay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238;
+    --navy-2:#1e3358;
+    --paper:#F6F7FA;
+    --paper-2:#ffffff;
+    --ink:#1B2130;
+    --ink-soft:#4C5568;
+    --line:#DDE2EA;
+    --gold:#B8862E;
+    --gold-soft:#F2E5CB;
+    --teal:#2E6F6B;
+    --teal-soft:#DCEEEC;
+    --coral:#B4483C;
+    --coral-soft:#F5DEDB;
+    --radius:14px;
+    --maxw:760px;
+  }
+
+  /* ---------- automatic dark mode ---------- */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --navy:#EAF0FB;
+      --navy-2:#9FB6E0;
+      --paper:#12161F;
+      --paper-2:#1B212D;
+      --ink:#E7E9EE;
+      --ink-soft:#A7AFC0;
+      --line:#2C3341;
+      --gold:#E0AE5C;
+      --gold-soft:#3A311F;
+      --teal:#6FC9C1;
+      --teal-soft:#1B3634;
+      --coral:#E38176;
+      --coral-soft:#3B2422;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    color:var(--navy);
+    line-height:1.2;
+    margin:0 0 .4em 0;
+  }
+  p{margin:0 0 1em 0;}
+  strong{color:var(--navy);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  button{font:inherit;}
+
+  .topbar{
+    position:sticky; top:0; z-index:100;
+    background:rgba(246,247,250,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.7em 1.1em;
+  }
+  @media (prefers-color-scheme: dark){
+    .topbar{background:rgba(18,22,31,.92);}
+  }
+  .topbar .brand{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1rem; color:var(--navy);
+    display:flex; align-items:baseline; gap:.5em;
+  }
+  .topbar .brand small{font-family:'Inter'; font-weight:500; font-size:.7rem; color:var(--ink-soft); text-transform:none;}
+  .topbar .back-link{
+    display:flex; align-items:center; gap:.4em; text-decoration:none;
+    color:var(--navy); font-size:.82rem; font-weight:600;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:9px; padding:.45em .8em;
+  }
+  .topbar .back-link svg{width:16px; height:16px; flex:none;}
+
+  main{
+    max-width:var(--maxw); margin:0 auto; padding:2em 1.1em 5em 1.1em;
+  }
+
+  .hero{margin-bottom:1.6em;}
+  .hero .eyebrow{
+    color:var(--gold); font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    font-size:.75rem; margin-bottom:.6em;
+  }
+  .hero h1{font-size:clamp(1.5rem,5vw,2rem); max-width:22ch;}
+  .hero .lead{font-size:1rem; color:var(--ink-soft); margin-top:.5em;}
+
+  /* ---------- generic card ---------- */
+  .card{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:1.4em 1.4em; margin:0 0 1.1em 0;
+  }
+  @media(min-width:480px){ .card{padding:1.6em 1.7em;} }
+
+  .q-tag{
+    display:inline-block; font-size:.68rem; font-weight:700; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--teal); background:var(--teal-soft);
+    padding:.25em .6em; border-radius:6px; margin-bottom:.8em;
+  }
+
+  /* ---------- setup screen ---------- */
+  .setup-section{margin-bottom:1.4em;}
+  .setup-section h2{font-size:1rem; margin-bottom:.3em;}
+  .setup-section .hint{font-size:.85rem; color:var(--ink-soft); margin-bottom:.8em;}
+
+  .quick-picks{display:flex; gap:.6em; flex-wrap:wrap; margin-bottom:.9em;}
+  .quick-btn{
+    background:var(--paper); border:1.5px solid var(--line); border-radius:999px;
+    padding:.55em 1.1em; font-size:.88rem; font-weight:600; color:var(--ink-soft);
+    cursor:pointer; min-height:44px;
+  }
+  .quick-btn:hover{border-color:var(--navy-2);}
+  .quick-btn.active{border-color:var(--gold); background:var(--gold-soft); color:var(--navy);}
+
+  .exact-row{display:flex; align-items:center; gap:.7em; flex-wrap:wrap;}
+  .exact-row label{font-size:.85rem; color:var(--ink-soft);}
+  .exact-row input[type="number"]{
+    width:5.5em; padding:.55em .6em; border-radius:9px; border:1.5px solid var(--line);
+    background:var(--paper); color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:.95rem;
+    min-height:44px;
+  }
+  .exact-row .cap{font-size:.78rem; color:var(--ink-soft);}
+
+  .toggle-row{
+    display:flex; align-items:flex-start; gap:.9em; padding:.9em 0; border-top:1px dashed var(--line);
+  }
+  .toggle-row:first-of-type{border-top:none;}
+  .switch{
+    flex:none; position:relative; width:46px; height:26px; margin-top:.15em;
+  }
+  .switch input{opacity:0; width:0; height:0;}
+  .switch .track{
+    position:absolute; inset:0; background:var(--line); border-radius:999px; cursor:pointer; transition:background .15s ease;
+  }
+  .switch .track::before{
+    content:""; position:absolute; width:20px; height:20px; left:3px; top:3px; border-radius:50%;
+    background:var(--paper-2); transition:transform .15s ease; box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  .switch input:checked + .track{background:var(--teal);}
+  .switch input:checked + .track::before{transform:translateX(20px);}
+  .toggle-txt strong{display:block; font-size:.92rem; color:var(--navy); margin-bottom:.1em;}
+  .toggle-txt span{font-size:.82rem; color:var(--ink-soft);}
+
+  .segmented{
+    display:flex; border:1.5px solid var(--line); border-radius:11px; overflow:hidden; margin-top:.9em;
+  }
+  .segmented button{
+    flex:1; background:var(--paper); border:none; padding:.75em .6em; font-size:.86rem; font-weight:600;
+    color:var(--ink-soft); cursor:pointer; min-height:44px;
+  }
+  .segmented button + button{border-left:1.5px solid var(--line);}
+  .segmented button.active{background:var(--navy); color:#fff;}
+
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:.92rem;
+    border-radius:10px; padding:.8em 1.5em; cursor:pointer; border:1px solid transparent;
+    min-height:46px;
+  }
+  .btn-primary{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .btn-primary:hover{background:var(--navy-2); border-color:var(--navy-2);}
+  .btn-primary:disabled{opacity:.4; cursor:default;}
+  .btn-ghost{background:var(--paper-2); color:var(--navy); border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--navy-2);}
+  .btn-block{width:100%;}
+  .start-row{margin-top:1.6em;}
+
+  /* ---------- quiz screen ---------- */
+  .progress-wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:.8em; margin:0 0 1.1em 0; font-size:.82rem; color:var(--ink-soft); flex-wrap:wrap;
+  }
+  .progress-track{
+    flex:1 1 140px; height:8px; border-radius:999px; background:var(--line); overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; background:var(--gold); border-radius:999px; width:0%;
+    transition:width .35s ease;
+  }
+  .score-chip{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:999px;
+    padding:.3em .8em; font-weight:600; color:var(--navy); font-size:.8rem; white-space:nowrap;
+  }
+
+  .q-text{font-size:1.08rem; font-weight:600; color:var(--navy); margin-bottom:1.1em; font-family:'Fraunces',serif;}
+
+  .options{display:flex; flex-direction:column; gap:.65em;}
+  .option{
+    display:flex; align-items:center; gap:.75em; text-align:left; width:100%;
+    background:var(--paper); border:1.5px solid var(--line); border-radius:11px;
+    padding:.8em 1em; font-family:'Inter',sans-serif; font-size:.94rem; color:var(--ink);
+    cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .1s ease;
+    min-height:48px;
+  }
+  .option:hover:not(:disabled){border-color:var(--navy-2);}
+  .option:active:not(:disabled){transform:scale(.99);}
+  .option:disabled{cursor:default;}
+  .option .letter{
+    flex:none; width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:.76rem; font-weight:700;
+    color:var(--ink-soft); font-family:'JetBrains Mono',monospace;
+  }
+  .option.selected{border-color:var(--navy-2); background:var(--teal-soft);}
+  .option.selected .letter{border-color:var(--navy-2); background:var(--navy-2); color:#fff;}
+  .option.correct{border-color:var(--teal); background:var(--teal-soft);}
+  .option.correct .letter{border-color:var(--teal); background:var(--teal); color:#fff;}
+  .option.incorrect{border-color:var(--coral); background:var(--coral-soft);}
+  .option.incorrect .letter{border-color:var(--coral); background:var(--coral); color:#fff;}
+  .option.dim{opacity:.55;}
+
+  .simple{
+    border-left:3px solid var(--gold); background:var(--gold-soft);
+    border-radius:0 var(--radius) var(--radius) 0;
+    padding:1em 1.2em; margin:1.2em 0 0 0; font-size:.9rem; display:none;
+  }
+  .simple.show{display:block;}
+  .simple .lbl{font-weight:700; color:var(--navy); display:block; margin-bottom:.25em; font-size:.76rem; text-transform:uppercase; letter-spacing:.04em;}
+
+  .actions-row{display:flex; justify-content:flex-end; margin-top:1.4em; gap:.7em;}
+
+  /* ---------- results screen ---------- */
+  .results{text-align:center; padding:1.8em 1.3em;}
+  .results .big-score{
+    font-family:'Fraunces',serif; font-weight:700; font-size:3rem; color:var(--navy);
+    margin:.2em 0 0 0;
+  }
+  .results .big-score small{font-size:1.25rem; color:var(--ink-soft); font-weight:600;}
+  .results .verdict{
+    display:inline-block; margin-top:.6em; font-weight:700; font-size:.82rem;
+    letter-spacing:.03em; text-transform:uppercase; padding:.35em .9em; border-radius:999px;
+  }
+  .verdict.high{color:#fff; background:var(--teal);}
+  .verdict.mid{color:#fff; background:var(--gold);}
+  .verdict.low{color:#fff; background:var(--coral);}
+  .results p.msg{color:var(--ink-soft); margin-top:1em; max-width:44ch; margin-left:auto; margin-right:auto;}
+  .results-actions{display:flex; gap:.7em; justify-content:center; margin-top:1.6em; flex-wrap:wrap;}
+
+  .review-list{margin-top:1.8em; text-align:left;}
+  .review-list h3{font-size:.95rem; margin-bottom:.9em;}
+  .review-item{
+    border:1px solid var(--line); border-radius:11px; padding:.9em 1em; margin-bottom:.7em;
+    font-size:.88rem;
+  }
+  .review-item .rhead{display:flex; align-items:center; gap:.5em; margin-bottom:.4em; flex-wrap:wrap;}
+  .review-item .mark{flex:none; font-weight:700; font-family:'JetBrains Mono',monospace;}
+  .review-item.ok .mark{color:var(--teal);}
+  .review-item.bad .mark{color:var(--coral);}
+  .review-item .ref-pill{
+    font-size:.68rem; font-weight:700; letter-spacing:.03em; text-transform:uppercase;
+    color:var(--teal); background:var(--teal-soft); padding:.15em .55em; border-radius:6px;
+  }
+  .review-item strong{display:block; color:var(--navy); margin-bottom:.3em;}
+  .review-item .rtxt span{display:block; color:var(--ink-soft); margin-top:.15em;}
+  .review-item .rtxt .ans-bad{color:var(--coral);}
+  .review-item .rtxt .ans-ok{color:var(--teal);}
+
+  footer{
+    max-width:var(--maxw); margin:2em auto 0 auto; padding:1.6em 1.1em 3em 1.1em;
+    color:var(--ink-soft); font-size:.85rem; border-top:1px solid var(--line);
+  }
+
+  @media(max-width:480px){
+    .hero h1{font-size:1.5rem;}
+    .actions-row{justify-content:stretch;}
+    .actions-row .btn{flex:1;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Finanzas Públicas <small>· Autoevaluación</small></div>
+  <a class="back-link" href="index.html" title="Volver a la guía de estudio">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+    <span>Volver a la guía</span>
+  </a>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Academia Diplomática y Consular · Curso de Perfeccionamiento</div>
+    <h1>Ponete a prueba</h1>
+    <p class="lead">Banco de preguntas de opción múltiple sobre toda la guía: finanzas públicas, el Presupuesto General de la Nación y el Clasificador Presupuestario de Paraguay. Elegí cuántas preguntas responder y cómo jugar.</p>
+  </section>
+
+  <div id="app"></div>
+</main>
+
+<footer>
+  <p>Juego de autoevaluación elaborado a partir de los mismos contenidos de la guía de estudio "Finanzas Públicas y Clasificador Presupuestario", de la Academia Diplomática y Consular del Paraguay.</p>
+</footer>
+
+<script>
+(function () {
+  // ======================================================================
+  // Banco de preguntas — extraído íntegramente del contenido de index.html.
+  // Cada pregunta trae 1 respuesta correcta y un pool de 5 incorrectas;
+  // en cada partida se sortean 3 de esas 5 para armar las 4 opciones.
+  // ======================================================================
+  const POOL = [
+    { ref:"Parte 1 · Tema 1", q:"¿Cuál es la primera etapa del ciclo del Estado según la guía?", correct:"Obtiene recursos", wrong:["Asigna recursos","Presta bienes y servicios","Rinde cuentas","Evalúa resultados","Promulga la ley"] },
+    { ref:"Parte 1 · Tema 1", q:"¿Qué etapa del ciclo del Estado permite el control social al informar los resultados obtenidos?", correct:"Rinde cuentas", wrong:["Asigna recursos","Obtiene recursos","Presta servicios","Planifica","Ejecuta"] },
+    { ref:"Parte 1 · Tema 2", q:"En el flujo que va del Plan Nacional a los Resultados, ¿qué elemento se ubica justo antes de 'Bienes y Servicios'?", correct:"Presupuesto", wrong:["Políticas Públicas","Plan Nacional","Resultados","Rendición de cuentas","Clasificador Presupuestario"] },
+    { ref:"Parte 1 · Tema 2", q:"Según la guía, ¿qué rol cumple el presupuesto entre el plan de país y los resultados que recibe la ciudadanía?", correct:"Es el puente que asigna los recursos para financiar planes y programas", wrong:["Es solo un documento contable sin efecto en los servicios","Reemplaza a las políticas públicas","Define directamente el Plan Nacional","Sustituye la rendición de cuentas","Solo regula la deuda pública"] },
+    { ref:"Parte 1 · Tema 3", q:"¿Cuál es el segundo paso de los cinco de la gestión presupuestaria?", correct:"Asignar", wrong:["Planificar","Ejecutar","Controlar","Evaluar","Registrar"] },
+    { ref:"Parte 1 · Tema 3", q:"¿Qué paso de la gestión presupuestaria consiste en verificar el buen uso, las normas y la transparencia?", correct:"Controlar", wrong:["Planificar","Asignar","Ejecutar","Evaluar","Registrar"] },
+    { ref:"Parte 1 · Tema 3", q:"¿En qué paso de la gestión presupuestaria las instituciones usan efectivamente la plata en sus actividades?", correct:"Ejecutar", wrong:["Planificar","Asignar","Controlar","Evaluar","Registrar"] },
+    { ref:"Parte 1 · Tema 4", q:"¿Cuál de las siguientes es una de las seis funciones del presupuesto según la guía?", correct:"Promueve transparencia", wrong:["Fija el tipo de cambio","Administra la política monetaria","Regula el comercio exterior","Aprueba tratados internacionales","Emite moneda"] },
+    { ref:"Parte 1 · Tema 4", q:"Según la guía, ¿cómo se mide realmente un buen presupuesto?", correct:"Por cuánto transforma la vida de las personas", wrong:["Por cuánto dinero total gasta","Por la cantidad de instituciones que abarca","Por la rapidez con que se aprueba","Por el número de leyes que modifica","Por el tamaño del déficit fiscal"] },
+    { ref:"Parte 1 · Tema 5", q:"¿Antes de qué fecha debe presentarse el proyecto de PGN al Congreso, según el Artículo 216 de la Constitución?", correct:"1 de septiembre", wrong:["30 de junio","30 de noviembre","20 de diciembre","30 de abril","1 de octubre"] },
+    { ref:"Parte 1 · Tema 5", q:"¿Antes de qué fecha debe aprobarse el PGN según la Constitución?", correct:"30 de noviembre", wrong:["1 de septiembre","20 de diciembre","30 de abril","30 de junio","31 de diciembre"] },
+    { ref:"Parte 1 · Tema 5", q:"¿Qué norma reglamenta en detalle cómo se planifica, ejecuta, controla y liquida el presupuesto, además de la deuda, la tesorería y la contabilidad pública?", correct:"Ley N° 1535/99", wrong:["Constitución Nacional, Art. 216","Ley del Clasificador Presupuestario","Código Tributario","Ley Orgánica Municipal","Ley de Contrataciones Públicas"] },
+    { ref:"Parte 1 · Tema 5", q:"El principio presupuestario por el cual los gastos autorizados son un techo que no se puede pasar, mientras que los ingresos son solo una estimación, se llama:", correct:"Legalidad", wrong:["Universalidad","Unidad","Anualidad","Equilibrio","Transparencia"] },
+    { ref:"Parte 1 · Tema 5", q:"¿Qué principio presupuestario exige que todo vaya en un solo documento, y no repartido en varios?", correct:"Unidad", wrong:["Universalidad","Legalidad","Anualidad","Equilibrio","Transparencia"] },
+    { ref:"Parte 1 · Tema 5", q:"¿Qué principio establece que no se puede gastar más de lo que se tiene en ingresos y financiamiento?", correct:"Equilibrio", wrong:["Universalidad","Legalidad","Unidad","Anualidad","Transparencia"] },
+    { ref:"Parte 1 · Tema 5", q:"¿Qué principio indica que el presupuesto se hace para un año, aunque pueda haber planes de inversión a más largo plazo?", correct:"Anualidad", wrong:["Universalidad","Legalidad","Unidad","Equilibrio","Transparencia"] },
+    { ref:"Parte 1 · Tema 6", q:"¿Cuál de estas instituciones NO forma parte de la Administración Central según el organigrama de la guía?", correct:"Universidades públicas", wrong:["Poder Ejecutivo","Poder Legislativo","Poder Judicial","Contraloría General de la República","Congreso Nacional"] },
+    { ref:"Parte 1 · Tema 6", q:"¿Qué dos grandes bloques integran, junto con los Gobiernos Municipales, el sector público paraguayo?", correct:"Gobierno Central y Banco Central", wrong:["Poder Ejecutivo y Poder Judicial únicamente","Ministerios y Gobernaciones únicamente","IPS y ESSAP únicamente","Congreso y Contraloría únicamente","MEF y SIAF únicamente"] },
+    { ref:"Parte 1 · Tema 6", q:"Dentro de la Administración Descentralizada, ¿cuál de estas categorías se incluye?", correct:"Empresas Públicas", wrong:["Poder Legislativo","Contraloría General de la República","Poder Judicial","Poder Ejecutivo","Banco Central"] },
+    { ref:"Parte 1 · Tema 7", q:"Según el alcance de la Ley 1535/99, ¿cuál de las siguientes SÍ está sujeta al presupuesto público?", correct:"Empresas públicas y empresas mixtas", wrong:["Empresas privadas sin fondos estatales","Organizaciones no gubernamentales sin financiamiento público","Personas físicas contribuyentes","Medios de comunicación privados","Bancos privados"] },
+    { ref:"Parte 1 · Tema 8", q:"¿Qué título de la Ley 1535/99 regula el sistema de tesorería, es decir, cómo se programa y administra la caja del Estado?", correct:"Título IV", wrong:["Título II","Título III","Título VI","Título VIII","Título VII"] },
+    { ref:"Parte 1 · Tema 8", q:"¿Qué título de la Ley 1535/99 trata sobre el crédito y la deuda pública?", correct:"Título V", wrong:["Título II","Título IV","Título VII","Título VIII","Título VI"] },
+    { ref:"Parte 1 · Tema 8", q:"El funcionamiento del SIAF (Sistema Integrado de Administración Financiera) está regulado en:", correct:"Título VIII", wrong:["Título II","Título IV","Título VI","Título VII","Título V"] },
+    { ref:"Parte 1 · Tema 8", q:"¿Qué título de la Ley 1535/99 regula el sistema de presupuesto: cómo se programa, formula, ejecuta, modifica y controla?", correct:"Título II", wrong:["Título III","Título V","Título VI","Título VII","Título IV"] },
+    { ref:"Parte 1 · Tema 9", q:"En el proceso circular de formulación del PGN, ¿qué paso ocurre inmediatamente después de que las entidades presentan sus proyectos?", correct:"Envían el proyecto al MEF", wrong:["El MEF emite las normas","El MEF analiza e integra el proyecto","Se presenta al Congreso","El Poder Ejecutivo promulga la ley","El Congreso aprueba y remite"] },
+    { ref:"Parte 1 · Tema 9", q:"¿Qué ocurre en el calendario presupuestario el 30 de abril?", correct:"Entrega de anteproyectos", wrong:["Presentación del proyecto de PGN","Estudio y dictamen de la Comisión Bicameral","Plazo constitucional de aprobación","Promulgación del PGN","Revisión de Diputados y Senadores"] },
+    { ref:"Parte 1 · Tema 9", q:"¿Qué ocurre en el calendario presupuestario el 20 de diciembre?", correct:"Promulgación del PGN", wrong:["Entrega de anteproyectos","Presentación del proyecto de PGN","Estudio de la Comisión Bicameral","Plazo constitucional de aprobación","Revisión de Diputados y Senadores"] },
+    { ref:"Parte 1 · Tema 9", q:"¿Quién es el encargado de analizar e integrar los proyectos de cada institución en un solo proyecto de PGN?", correct:"El Ministerio de Economía y Finanzas (MEF)", wrong:["El Congreso Nacional","La Contraloría General de la República","El Poder Judicial","El Banco Central del Paraguay","El Poder Ejecutivo, sin pasar por el MEF"] },
+    { ref:"Parte 1 · Tema 10", q:"Según las cifras del PGN 2026 citadas en la guía, ¿qué porcentaje del presupuesto aprobado administra la Administración Central?", correct:"50,1%", wrong:["49,9%","59%","37%","100%","4%"] },
+    { ref:"Parte 1 · Tema 10", q:"¿Cuál fue la fuente que más aportó al financiamiento del PGN 2026 según la guía?", correct:"Institucional (recursos propios)", wrong:["Tesoro (impuestos y rentas)","Crédito público (préstamos)","Donaciones externas","Coparticipación municipal","Recursos del Banco Central"] },
+    { ref:"Parte 1 · Tema 10", q:"¿A cuánto sube el presupuesto vigente del PGN 2026 tras sus modificaciones, según la guía?", correct:"G. 154,1 billones", wrong:["G. 149,6 billones","G. 75,0 billones","G. 74,7 billones","G. 52,4 billones","G. 22,5 billones"] },
+    { ref:"Parte 1 · Tema 11", q:"¿Cuál de los siguientes es uno de los cuatro pilares estratégicos definidos por el MEF para el PGN 2027?", correct:"Presupuesto por resultados", wrong:["Reducción del número de ministerios","Eliminación del Clasificador Presupuestario","Descentralización total del Banco Central","Congelamiento de todos los sueldos públicos","Privatización de entidades descentralizadas"] },
+    { ref:"Parte 1 · Tema 11", q:"El pilar del PGN 2027 que busca cuidar el equilibrio fiscal y la sostenibilidad financiera de mediano plazo se llama:", correct:"Sostenibilidad fiscal", wrong:["Calidad del gasto","Presupuesto por resultados","Gestión integrada","Equilibrio institucional","Transparencia total"] },
+    { ref:"Parte 2 · Tema 1", q:"¿Qué es, en esencia, el Clasificador Presupuestario?", correct:"Un sistema único de categorías para ordenar, registrar y analizar todos los ingresos y gastos del PGN", wrong:["Una ley que fija el salario mínimo estatal","Un organismo de control externo del presupuesto","Un tribunal que juzga delitos económicos","Un banco de datos de proveedores del Estado","Un mecanismo para fijar impuestos"] },
+    { ref:"Parte 2 · Tema 1", q:"¿Cuál de las siguientes NO es una de las utilidades del Clasificador Presupuestario mencionadas en la guía?", correct:"Fijar el tipo de cambio del guaraní", wrong:["Identificar el origen y destino de los recursos","Conectar lo planificado con lo presupuestado","Ordenar las transacciones en categorías homogéneas","Ayudar a decidir sobre política fiscal","Facilitar la comparación entre instituciones"] },
+    { ref:"Parte 2 · Tema 2", q:"¿Cuál de estas funciones NO forma parte de las cinco que cumple el Clasificador Presupuestario según su diagrama?", correct:"Recaudar", wrong:["Ordenar","Analizar","Controlar","Evaluar","Registrar"] },
+    { ref:"Parte 2 · Tema 3", q:"¿Cuál de las cinco clasificaciones del gasto responde a la pregunta '¿quién gasta?'?", correct:"Institucional", wrong:["Funcional","Programática","Económica","Fuente de Financiamiento","Objeto del gasto"] },
+    { ref:"Parte 2 · Tema 3", q:"¿Cuál de las cinco clasificaciones del gasto responde a la pregunta '¿con qué plata?'?", correct:"Fuente de Financiamiento", wrong:["Institucional","Funcional","Programática","Económica","Objeto del gasto"] },
+    { ref:"Parte 2 · Tema 3", q:"¿Cuál es la diferencia entre la clasificación Funcional y la Programática?", correct:"La Funcional agrupa por propósito general (salud, educación) sin importar la institución; la Programática identifica el programa o proyecto específico", wrong:["Son exactamente lo mismo, solo cambia el nombre","La Funcional identifica quién gasta y la Programática de dónde sale la plata","La Programática solo aplica a gastos de capital y la Funcional solo a gastos corrientes","La Funcional es exclusiva de los gobiernos municipales","La Programática reemplaza a la clasificación Económica"] },
+    { ref:"Parte 2 · Tema 4", q:"En la clasificación Institucional, ¿en qué grupo se ubica el IPS?", correct:"Entidades Descentralizadas", wrong:["Gobierno Central","Gobiernos Locales","Banco Central","Poder Judicial","Administración Central"] },
+    { ref:"Parte 2 · Tema 5", q:"Según la guía, dentro de la función 'Servicios Sociales' del PGN, ¿cuáles son las áreas que concentran la mayor parte del gasto?", correct:"Salud y Seguridad Social, seguidas de Educación", wrong:["Defensa y Seguridad","Deuda Pública y Regulación","Solo Educación","Administración Gubernamental","Servicios Económicos"] },
+    { ref:"Parte 2 · Tema 5", q:"¿Cuál de estas funciones tuvo el monto aproximado más alto en el PGN según la tabla de la guía?", correct:"Servicios Sociales", wrong:["Servicios Económicos","Servicios de la Deuda Pública","Administración Gubernamental","Servicios de Seguridad","Regulación y Control"] },
+    { ref:"Parte 2 · Tema 6", q:"¿Qué tipo de programa agrupa las funciones de conducción y administración general de una institución?", correct:"Programa Central", wrong:["Programa Sustantivo","Partidas no asignables","Programa Institucional","Programa Funcional","Programa de Inversión"] },
+    { ref:"Parte 2 · Tema 6", q:"¿Qué tipo de programa produce directamente los bienes y servicios para la ciudadanía?", correct:"Programa Sustantivo", wrong:["Programa Central","Partidas no asignables","Programa Institucional","Programa Base","Programa Transversal"] },
+    { ref:"Parte 2 · Tema 7", q:"Según la clasificación Económica del gasto, el pago de sueldos a funcionarios corresponde a:", correct:"Gasto corriente", wrong:["Gasto de capital","Gasto de financiamiento","Ingreso de capital","Recurso de financiamiento","Inversión física"] },
+    { ref:"Parte 2 · Tema 7", q:"El pago de intereses y la amortización de préstamos corresponden, en la clasificación Económica, a:", correct:"Financiamiento", wrong:["Gasto corriente","Gasto de capital","Ingreso corriente","Ingreso de capital","Inversión financiera"] },
+    { ref:"Parte 2 · Tema 7", q:"Según el gráfico de distribución del gasto por tipo económico en la guía, ¿qué porcentaje corresponde al gasto corriente?", correct:"59%", wrong:["37%","4%","50%","96%","41%"] },
+    { ref:"Parte 2 · Tema 7", q:"Del lado de los ingresos, ¿qué categoría económica incluye la venta de activos y donaciones?", correct:"Ingresos de Capital", wrong:["Ingresos Corrientes","Recursos de Financiamiento","Gasto de Capital","Gasto Corriente","Ingresos Institucionales"] },
+    { ref:"Parte 2 · Tema 8", q:"Según el ejercicio de autoevaluación de la guía, ¿cómo se clasifica la construcción de un puente?", correct:"Gasto de capital", wrong:["Gasto corriente","Gasto de financiamiento","Ingreso de capital","Transferencia corriente","Inversión financiera"] },
+    { ref:"Parte 2 · Tema 8", q:"Según el ejercicio de la guía, ¿cómo se clasifica un subsidio a adultos mayores?", correct:"Gasto corriente", wrong:["Gasto de capital","Gasto de financiamiento","Ingreso corriente","Inversión física","Transferencia de capital"] },
+    { ref:"Parte 2 · Tema 9", q:"¿Qué código de fuente de financiamiento corresponde a los Recursos del Tesoro?", correct:"FF10", wrong:["FF20","FF30","FF40","FF50","FF01"] },
+    { ref:"Parte 2 · Tema 9", q:"¿Qué código de fuente de financiamiento corresponde a los Recursos Institucionales (ingresos propios, coparticipaciones, donaciones)?", correct:"FF30", wrong:["FF10","FF20","FF40","FF50","FF03"] },
+    { ref:"Parte 2 · Tema 10", q:"En la jerarquía del objeto del gasto (grupo → subgrupo → objeto), ¿qué representa el código 111 en el ejemplo de la guía?", correct:"Sueldo (objeto específico)", wrong:["Servicios Personales (grupo)","Remuneraciones Básicas (subgrupo)","Servicio de la Deuda Pública (grupo)","Transferencias (grupo)","Bienes de Consumo (grupo)"] },
+    { ref:"Parte 2 · Tema 10", q:"¿Qué grupo del objeto del gasto incluye becas, jubilaciones y aportes a municipios u ONG?", correct:"800 — Transferencias", wrong:["100 — Servicios Personales","500 — Inversión Física","600 — Inversión Financiera","900 — Otros Gastos","700 — Servicio de la Deuda Pública"] },
+    { ref:"Parte 2 · Tema 10", q:"¿Qué grupo del objeto del gasto incluye construcciones, maquinaria y equipos?", correct:"500 — Inversión Física", wrong:["100 — Servicios Personales","300 — Bienes de Consumo e Insumos","600 — Inversión Financiera","700 — Servicio de la Deuda Pública","800 — Transferencias"] },
+    { ref:"Parte 2 · Tema 10", q:"¿Cuál es la diferencia entre la clasificación Económica y el objeto del gasto?", correct:"La Económica dice si el gasto es corriente, de capital o financiamiento; el objeto del gasto precisa exactamente en qué bien o servicio se gastó", wrong:["Son sinónimos, se usan indistintamente","El objeto del gasto solo aplica a ingresos, no a gastos","La Económica identifica la institución responsable y el objeto la función","El objeto del gasto reemplaza a la Fuente de Financiamiento","La Económica es un nivel más detallado que el objeto del gasto"] },
+    { ref:"Parte 2 · Tema 11", q:"En el caso del programa 'Almuerzo Escolar en Comunidades Rurales' de Paraguarí que trae la guía, ¿cuál es su Fuente de Financiamiento?", correct:"FF10 — Recursos del Tesoro", wrong:["FF20 — Recursos del Crédito","FF30 — Recursos Institucionales","FF10 — Recursos Institucionales","No se especifica","FF20 — Recursos del Tesoro"] },
+    { ref:"Parte 2 · Tema 11", q:"En ese mismo caso, ¿cuál es la clasificación Económica del gasto?", correct:"Gasto corriente", wrong:["Gasto de capital","Gasto de financiamiento","Ingreso de capital","Inversión física","Inversión financiera"] },
+    { ref:"Parte 2 · Tema 11", q:"En ese mismo caso, ¿qué objeto del gasto específico se usa?", correct:"848 — Transferencias para Alimentación Escolar y Control Sanitario", wrong:["111 — Sueldo","500 — Inversión Física","700 — Servicio de la Deuda Pública","300 — Bienes de Consumo e Insumos","600 — Inversión Financiera"] },
+    { ref:"Glosario", q:"¿Qué significan las siglas PGN?", correct:"Presupuesto General de la Nación", wrong:["Plan General de la Nación","Programa de Gestión Nacional","Proyecto de Gasto Nacional","Política General de la Nación","Presupuesto Global de la Nación"] },
+    { ref:"Glosario", q:"¿Qué significan las siglas MEF?", correct:"Ministerio de Economía y Finanzas", wrong:["Ministerio de Educación y Formación","Ministerio de Estado y Finanzas","Ministerio de Empresas Fiscales","Ministerio de Economía Federal","Ministerio de Ejecución Financiera"] },
+    { ref:"Glosario", q:"¿Qué enfoque conecta los recursos con los productos, efectos e impactos que se buscan lograr, según el glosario de la guía?", correct:"Presupuesto por Resultados (PpR)", wrong:["Clasificador Presupuestario","Gestión Integrada","Sostenibilidad Fiscal","Ley de Administración Financiera","Objeto del Gasto"] }
+  ].map((item, i) => Object.assign({ id: i + 1 }, item));
+
+  const MIN_Q = 5;
+  const MAX_Q = POOL.length;
+
+  const settings = { count: Math.min(20, MAX_Q), shuffleOrder: true, instant: true };
+  let session = null; // { questions:[{item, options:[{text,isCorrect}], selected, locked}], index, score }
+
+  const app = document.getElementById('app');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function buildOptions(item) {
+    const wrongSample = shuffle(item.wrong).slice(0, 3);
+    return shuffle([
+      { text: item.correct, isCorrect: true },
+      ...wrongSample.map(w => ({ text: w, isCorrect: false }))
+    ]);
+  }
+
+  function buildSession(preserveQuestions) {
+    let chosenItems;
+    if (preserveQuestions) {
+      chosenItems = session.questions.map(r => r.item);
+      if (settings.shuffleOrder) chosenItems = shuffle(chosenItems);
+    } else {
+      let picked = shuffle(POOL).slice(0, settings.count);
+      if (!settings.shuffleOrder) picked = picked.sort((a, b) => a.id - b.id);
+      chosenItems = picked;
+    }
+    session = {
+      questions: chosenItems.map(item => ({
+        item,
+        options: buildOptions(item),
+        selected: null,
+        locked: false
+      })),
+      index: 0,
+      score: 0
+    };
+  }
+
+  // ---------------------------------------------------------------- setup
+  function renderSetup() {
+    app.innerHTML = `
+      <div class="card">
+        <div class="setup-section">
+          <h2>¿Cuántas preguntas?</h2>
+          <p class="hint">El banco tiene ${MAX_Q} preguntas en total. Elegí una cantidad rápida o escribí la exacta.</p>
+          <div class="quick-picks" id="quickPicks">
+            ${[10, 20, 30, MAX_Q].filter((v, i, a) => a.indexOf(v) === i && v <= MAX_Q).map(v => `
+              <button type="button" class="quick-btn" data-val="${v}">${v === MAX_Q ? 'Todas (' + MAX_Q + ')' : v}</button>
+            `).join('')}
+          </div>
+          <div class="exact-row">
+            <label for="exactCount">Cantidad exacta</label>
+            <input type="number" id="exactCount" min="${MIN_Q}" max="${MAX_Q}" step="1" value="${settings.count}">
+            <span class="cap">(entre ${MIN_Q} y ${MAX_Q})</span>
+          </div>
+        </div>
+
+        <div class="setup-section">
+          <h2>Opciones de la partida</h2>
+          <div class="toggle-row">
+            <label class="switch">
+              <input type="checkbox" id="shuffleToggle" ${settings.shuffleOrder ? 'checked' : ''}>
+              <span class="track"></span>
+            </label>
+            <div class="toggle-txt">
+              <strong>Mezclar orden de las preguntas</strong>
+              <span>Si está apagado, aparecen en el orden de la guía (Parte 1 → Parte 2 → Glosario).</span>
+            </div>
+          </div>
+          <div class="toggle-row">
+            <div style="flex:1;">
+              <strong style="display:block;font-size:.92rem;color:var(--navy);margin-bottom:.3em;">Corrección</strong>
+              <span style="font-size:.82rem;color:var(--ink-soft);">Elegí si querés ver si acertaste en cada pregunta, o recién al terminar.</span>
+              <div class="segmented" id="correctionSeg">
+                <button type="button" data-mode="instant" class="${settings.instant ? 'active' : ''}">Instantánea</button>
+                <button type="button" data-mode="end" class="${!settings.instant ? 'active' : ''}">Solo al final</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="start-row">
+          <button class="btn btn-primary btn-block" id="startBtn">Empezar el test</button>
+        </div>
+      </div>
+    `;
+
+    const quickPicks = document.getElementById('quickPicks');
+    const exactInput = document.getElementById('exactCount');
+
+    function syncQuickActive() {
+      quickPicks.querySelectorAll('.quick-btn').forEach(b => {
+        b.classList.toggle('active', parseInt(b.dataset.val, 10) === settings.count);
+      });
+    }
+    syncQuickActive();
+
+    quickPicks.querySelectorAll('.quick-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        settings.count = parseInt(btn.dataset.val, 10);
+        exactInput.value = settings.count;
+        syncQuickActive();
+      });
+    });
+
+    exactInput.addEventListener('input', () => {
+      let v = parseInt(exactInput.value, 10);
+      if (isNaN(v)) return;
+      v = Math.max(MIN_Q, Math.min(MAX_Q, v));
+      settings.count = v;
+      syncQuickActive();
+    });
+    exactInput.addEventListener('blur', () => { exactInput.value = settings.count; });
+
+    document.getElementById('shuffleToggle').addEventListener('change', (e) => {
+      settings.shuffleOrder = e.target.checked;
+    });
+
+    document.getElementById('correctionSeg').querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        settings.instant = btn.dataset.mode === 'instant';
+        document.getElementById('correctionSeg').querySelectorAll('button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      let v = parseInt(exactInput.value, 10);
+      if (!isNaN(v)) settings.count = Math.max(MIN_Q, Math.min(MAX_Q, v));
+      buildSession(false);
+      renderQuiz();
+    });
+  }
+
+  // ----------------------------------------------------------------- quiz
+  function renderQuiz() {
+    const total = session.questions.length;
+    const round = session.questions[session.index];
+    const pct = Math.round((session.index / total) * 100);
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    const isLast = session.index === total - 1;
+
+    app.innerHTML = `
+      <div class="progress-wrap">
+        <span>Pregunta ${session.index + 1} de ${total}</span>
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        ${settings.instant ? `<span class="score-chip">${session.score} ✓</span>` : ''}
+      </div>
+      <div class="card">
+        <span class="q-tag">${round.item.ref}</span>
+        <div class="q-text">${round.item.q}</div>
+        <div class="options" id="optionsWrap">
+          ${round.options.map((opt, i) => `
+            <button class="option" data-idx="${i}">
+              <span class="letter">${letters[i]}</span>
+              <span>${opt.text}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="simple" id="explainBox">
+          <span class="lbl">Referencia</span>
+          <span id="explainText"></span>
+        </div>
+        <div class="actions-row">
+          <button class="btn btn-primary" id="nextBtn" ${round.locked || round.selected !== null ? '' : 'disabled'}>
+            ${isLast ? 'Ver resultado' : 'Siguiente pregunta'}
+          </button>
+        </div>
+      </div>
+    `;
+
+    const optionsWrap = document.getElementById('optionsWrap');
+    const nextBtn = document.getElementById('nextBtn');
+    const explainBox = document.getElementById('explainBox');
+    const explainText = document.getElementById('explainText');
+
+    function paintLocked() {
+      optionsWrap.querySelectorAll('.option').forEach(b => {
+        const bi = parseInt(b.dataset.idx, 10);
+        b.disabled = true;
+        if (round.options[bi].isCorrect) b.classList.add('correct');
+        else if (bi === round.selected) b.classList.add('incorrect');
+        else b.classList.add('dim');
+      });
+      explainText.textContent = round.item.ref + ' — Respuesta correcta: ' + round.item.correct;
+      explainBox.classList.add('show');
+    }
+
+    function paintSelectedOnly() {
+      optionsWrap.querySelectorAll('.option').forEach(b => {
+        const bi = parseInt(b.dataset.idx, 10);
+        b.classList.toggle('selected', bi === round.selected);
+      });
+    }
+
+    if (round.locked) paintLocked();
+    else if (round.selected !== null) paintSelectedOnly();
+
+    optionsWrap.querySelectorAll('.option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (round.locked) return;
+        const idx = parseInt(btn.dataset.idx, 10);
+        const wasAnswered = round.selected !== null;
+        round.selected = idx;
+
+        if (settings.instant) {
+          if (!round.locked) {
+            round.locked = true;
+            if (round.options[idx].isCorrect && !wasAnswered) session.score++;
+            else if (!round.options[idx].isCorrect && wasAnswered) { /* no-op, already locked path unreachable */ }
+            paintLocked();
+          }
+        } else {
+          paintSelectedOnly();
+        }
+        nextBtn.disabled = false;
+      });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (!settings.instant && round.selected !== null && round.options[round.selected].isCorrect) {
+        // score is only computed at the end for "solo al final" mode
+      }
+      if (session.index < total - 1) {
+        session.index++;
+        renderQuiz();
+      } else {
+        finalizeScore();
+        renderResults();
+      }
+    });
+  }
+
+  function finalizeScore() {
+    if (settings.instant) return; // already scored as we went
+    session.score = session.questions.reduce((acc, r) => acc + (r.selected !== null && r.options[r.selected].isCorrect ? 1 : 0), 0);
+  }
+
+  // -------------------------------------------------------------- results
+  function renderResults() {
+    const total = session.questions.length;
+    const score = session.score;
+    const pct = Math.round((score / total) * 100);
+    let verdictClass = 'low', verdictLabel = 'A reforzar', msg = 'Repasá el ciclo presupuestario y las cinco clasificaciones del gasto: con otra vuelta a la guía lo dominás.';
+    if (pct >= 80) {
+      verdictClass = 'high'; verdictLabel = 'Excelente';
+      msg = 'Manejás con solidez las finanzas públicas y el Clasificador Presupuestario. ¡Muy buen nivel!';
+    } else if (pct >= 50) {
+      verdictClass = 'mid'; verdictLabel = 'Buen punto de partida';
+      msg = 'Vas bien encaminado. Repasá los temas donde fallaste y volvé a intentarlo.';
+    }
+
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    const reviewHtml = session.questions.map(r => {
+      const chosenIdx = r.selected;
+      const ok = chosenIdx !== null && r.options[chosenIdx].isCorrect;
+      const chosenText = chosenIdx !== null ? letters[chosenIdx] + ') ' + r.options[chosenIdx].text : 'Sin responder';
+      const correctOpt = r.options.find(o => o.isCorrect);
+      return `
+        <div class="review-item ${ok ? 'ok' : 'bad'}">
+          <div class="rhead">
+            <span class="mark">${ok ? '✓' : '✕'}</span>
+            <span class="ref-pill">${r.item.ref}</span>
+          </div>
+          <strong>${r.item.q}</strong>
+          <div class="rtxt">
+            <span class="${ok ? 'ans-ok' : 'ans-bad'}">Tu respuesta: ${chosenText}</span>
+            ${ok ? '' : `<span class="ans-ok">Correcta: ${correctOpt.text}</span>`}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    app.innerHTML = `
+      <div class="card results">
+        <span class="q-tag">Resultado final</span>
+        <div class="big-score">${score}<small> / ${total}</small></div>
+        <div class="verdict ${verdictClass}">${verdictLabel} · ${pct}%</div>
+        <p class="msg">${msg}</p>
+        <div class="results-actions">
+          <button class="btn btn-primary" id="retrySameBtn">Mismas preguntas, opciones nuevas</button>
+          <button class="btn btn-ghost" id="retryNewBtn">Test completamente nuevo</button>
+          <button class="btn btn-ghost" id="backSetupBtn">Cambiar configuración</button>
+        </div>
+        <div class="review-list">
+          <h3>Repaso pregunta por pregunta</h3>
+          ${reviewHtml}
+        </div>
+      </div>
+    `;
+
+    document.getElementById('retrySameBtn').addEventListener('click', () => {
+      buildSession(true);
+      renderQuiz();
+    });
+    document.getElementById('retryNewBtn').addEventListener('click', () => {
+      buildSession(false);
+      renderQuiz();
+    });
+    document.getElementById('backSetupBtn').addEventListener('click', () => {
+      session = null;
+      renderSetup();
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  renderSetup();
+})();
+</script>
+</body>
+</html>
