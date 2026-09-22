@@ -25,6 +25,16 @@
     --coral-soft:#F5DEDB;
     --radius:14px;
     --maxw:760px;
+
+    /* Fixed solid-fill colors for buttons/badges that carry white text.
+       These stay constant in both themes so white text keeps contrast —
+       unlike --navy/--navy-2/--teal/--coral/--gold, which flip to light
+       tones in dark mode for use as text/accent color, not as a fill. */
+    --solid-navy:#152238;
+    --solid-navy-2:#1e3358;
+    --solid-teal:#2E6F6B;
+    --solid-coral:#B4483C;
+    --solid-gold:#B8862E;
   }
 
   /* ---------- automatic dark mode ---------- */
@@ -144,21 +154,6 @@
     display:flex; align-items:flex-start; gap:.9em; padding:.9em 0; border-top:1px dashed var(--line);
   }
   .toggle-row:first-of-type{border-top:none;}
-  .switch{
-    flex:none; position:relative; width:46px; height:26px; margin-top:.15em;
-  }
-  .switch input{opacity:0; width:0; height:0;}
-  .switch .track{
-    position:absolute; inset:0; background:var(--line); border-radius:999px; cursor:pointer; transition:background .15s ease;
-  }
-  .switch .track::before{
-    content:""; position:absolute; width:20px; height:20px; left:3px; top:3px; border-radius:50%;
-    background:var(--paper-2); transition:transform .15s ease; box-shadow:0 1px 3px rgba(0,0,0,.25);
-  }
-  .switch input:checked + .track{background:var(--teal);}
-  .switch input:checked + .track::before{transform:translateX(20px);}
-  .toggle-txt strong{display:block; font-size:.92rem; color:var(--navy); margin-bottom:.1em;}
-  .toggle-txt span{font-size:.82rem; color:var(--ink-soft);}
 
   .segmented{
     display:flex; border:1.5px solid var(--line); border-radius:11px; overflow:hidden; margin-top:.9em;
@@ -168,15 +163,15 @@
     color:var(--ink-soft); cursor:pointer; min-height:44px;
   }
   .segmented button + button{border-left:1.5px solid var(--line);}
-  .segmented button.active{background:var(--navy); color:#fff;}
+  .segmented button.active{background:var(--solid-navy); color:#fff;}
 
   .btn{
     font-family:'Inter',sans-serif; font-weight:600; font-size:.92rem;
     border-radius:10px; padding:.8em 1.5em; cursor:pointer; border:1px solid transparent;
     min-height:46px;
   }
-  .btn-primary{background:var(--navy); color:#fff; border-color:var(--navy);}
-  .btn-primary:hover{background:var(--navy-2); border-color:var(--navy-2);}
+  .btn-primary{background:var(--solid-navy); color:#fff; border-color:var(--solid-navy);}
+  .btn-primary:hover{background:var(--solid-navy-2); border-color:var(--solid-navy-2);}
   .btn-primary:disabled{opacity:.4; cursor:default;}
   .btn-ghost{background:var(--paper-2); color:var(--navy); border-color:var(--line);}
   .btn-ghost:hover{border-color:var(--navy-2);}
@@ -218,12 +213,12 @@
     display:flex; align-items:center; justify-content:center; font-size:.76rem; font-weight:700;
     color:var(--ink-soft); font-family:'JetBrains Mono',monospace;
   }
-  .option.selected{border-color:var(--navy-2); background:var(--teal-soft);}
-  .option.selected .letter{border-color:var(--navy-2); background:var(--navy-2); color:#fff;}
+  .option.selected{border-color:var(--solid-navy-2); background:var(--teal-soft);}
+  .option.selected .letter{border-color:var(--solid-navy-2); background:var(--solid-navy-2); color:#fff;}
   .option.correct{border-color:var(--teal); background:var(--teal-soft);}
-  .option.correct .letter{border-color:var(--teal); background:var(--teal); color:#fff;}
+  .option.correct .letter{border-color:var(--solid-teal); background:var(--solid-teal); color:#fff;}
   .option.incorrect{border-color:var(--coral); background:var(--coral-soft);}
-  .option.incorrect .letter{border-color:var(--coral); background:var(--coral); color:#fff;}
+  .option.incorrect .letter{border-color:var(--solid-coral); background:var(--solid-coral); color:#fff;}
   .option.dim{opacity:.55;}
 
   .simple{
@@ -247,9 +242,9 @@
     display:inline-block; margin-top:.6em; font-weight:700; font-size:.82rem;
     letter-spacing:.03em; text-transform:uppercase; padding:.35em .9em; border-radius:999px;
   }
-  .verdict.high{color:#fff; background:var(--teal);}
-  .verdict.mid{color:#fff; background:var(--gold);}
-  .verdict.low{color:#fff; background:var(--coral);}
+  .verdict.high{color:#fff; background:var(--solid-teal);}
+  .verdict.mid{color:#fff; background:var(--solid-gold);}
+  .verdict.low{color:#fff; background:var(--solid-coral);}
   .results p.msg{color:var(--ink-soft); margin-top:1em; max-width:44ch; margin-left:auto; margin-right:auto;}
   .results-actions{display:flex; gap:.7em; justify-content:center; margin-top:1.6em; flex-wrap:wrap;}
 
@@ -383,7 +378,7 @@
   const MIN_Q = 5;
   const MAX_Q = POOL.length;
 
-  const settings = { count: Math.min(20, MAX_Q), shuffleOrder: true, instant: true };
+  const settings = { count: Math.min(20, MAX_Q), instant: true };
   let session = null; // { questions:[{item, options:[{text,isCorrect}], selected, locked}], index, score }
 
   const app = document.getElementById('app');
@@ -406,15 +401,9 @@
   }
 
   function buildSession(preserveQuestions) {
-    let chosenItems;
-    if (preserveQuestions) {
-      chosenItems = session.questions.map(r => r.item);
-      if (settings.shuffleOrder) chosenItems = shuffle(chosenItems);
-    } else {
-      let picked = shuffle(POOL).slice(0, settings.count);
-      if (!settings.shuffleOrder) picked = picked.sort((a, b) => a.id - b.id);
-      chosenItems = picked;
-    }
+    const chosenItems = preserveQuestions
+      ? shuffle(session.questions.map(r => r.item))
+      : shuffle(POOL).slice(0, settings.count);
     session = {
       questions: chosenItems.map(item => ({
         item,
@@ -448,16 +437,6 @@
 
         <div class="setup-section">
           <h2>Opciones de la partida</h2>
-          <div class="toggle-row">
-            <label class="switch">
-              <input type="checkbox" id="shuffleToggle" ${settings.shuffleOrder ? 'checked' : ''}>
-              <span class="track"></span>
-            </label>
-            <div class="toggle-txt">
-              <strong>Mezclar orden de las preguntas</strong>
-              <span>Si está apagado, aparecen en el orden de la guía (Parte 1 → Parte 2 → Glosario).</span>
-            </div>
-          </div>
           <div class="toggle-row">
             <div style="flex:1;">
               <strong style="display:block;font-size:.92rem;color:var(--navy);margin-bottom:.3em;">Corrección</strong>
@@ -502,10 +481,6 @@
       syncQuickActive();
     });
     exactInput.addEventListener('blur', () => { exactInput.value = settings.count; });
-
-    document.getElementById('shuffleToggle').addEventListener('change', (e) => {
-      settings.shuffleOrder = e.target.checked;
-    });
 
     document.getElementById('correctionSeg').querySelectorAll('button').forEach(btn => {
       btn.addEventListener('click', () => {
