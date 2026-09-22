@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoevaluación · Finanzas Públicas y Clasificador Presupuestario</title>
+<meta name="description" content="Juego de preguntas de opción múltiple para autoevaluarte sobre finanzas públicas, el ciclo presupuestario y el Clasificador Presupuestario de Paraguay.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#152238;
+    --navy-2:#1e3358;
+    --paper:#F6F7FA;
+    --paper-2:#ffffff;
+    --ink:#1B2130;
+    --ink-soft:#4C5568;
+    --line:#DDE2EA;
+    --gold:#B8862E;
+    --gold-soft:#F2E5CB;
+    --teal:#2E6F6B;
+    --teal-soft:#DCEEEC;
+    --coral:#B4483C;
+    --coral-soft:#F5DEDB;
+    --radius:14px;
+    --maxw:720px;
+  }
+
+  /* ---------- automatic dark mode ---------- */
+  @media (prefers-color-scheme: dark){
+    :root{
+      --navy:#EAF0FB;
+      --navy-2:#9FB6E0;
+      --paper:#12161F;
+      --paper-2:#1B212D;
+      --ink:#E7E9EE;
+      --ink-soft:#A7AFC0;
+      --line:#2C3341;
+      --gold:#E0AE5C;
+      --gold-soft:#3A311F;
+      --teal:#6FC9C1;
+      --teal-soft:#1B3634;
+      --coral:#E38176;
+      --coral-soft:#3B2422;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    color:var(--navy);
+    line-height:1.2;
+    margin:0 0 .4em 0;
+  }
+  p{margin:0 0 1em 0;}
+  strong{color:var(--navy);}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  .topbar{
+    position:sticky; top:0; z-index:100;
+    background:rgba(246,247,250,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.7em 1.25em;
+  }
+  @media (prefers-color-scheme: dark){
+    .topbar{background:rgba(18,22,31,.92);}
+  }
+  .topbar .brand{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem; color:var(--navy);
+    display:flex; align-items:baseline; gap:.5em;
+  }
+  .topbar .brand small{font-family:'Inter'; font-weight:500; font-size:.72rem; color:var(--ink-soft); text-transform:none;}
+
+  main{
+    max-width:var(--maxw); margin:0 auto; padding:2.4em 1.25em 5em 1.25em;
+  }
+
+  .hero{margin-bottom:1.8em;}
+  .hero .eyebrow{
+    color:var(--gold); font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    font-size:.78rem; margin-bottom:.7em;
+  }
+  .hero h1{font-size:clamp(1.6rem,4vw,2.1rem); max-width:20ch;}
+  .hero .lead{font-size:1.02rem; color:var(--ink-soft); margin-top:.5em;}
+
+  /* ---------- progress ---------- */
+  .progress-wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:1em; margin:1.6em 0 1.2em 0; font-size:.85rem; color:var(--ink-soft);
+  }
+  .progress-track{
+    flex:1; height:8px; border-radius:999px; background:var(--line); overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; background:var(--gold); border-radius:999px; width:0%;
+    transition:width .35s ease;
+  }
+  .score-chip{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:999px;
+    padding:.35em .85em; font-weight:600; color:var(--navy); font-size:.82rem; white-space:nowrap;
+  }
+
+  /* ---------- quiz card ---------- */
+  .card{
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:1.6em 1.7em; margin:0 0 1.2em 0;
+  }
+  .q-tag{
+    display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--teal); background:var(--teal-soft);
+    padding:.25em .65em; border-radius:6px; margin-bottom:.9em;
+  }
+  .q-text{font-size:1.12rem; font-weight:600; color:var(--navy); margin-bottom:1.1em; font-family:'Fraunces',serif;}
+
+  .options{display:flex; flex-direction:column; gap:.7em;}
+  .option{
+    display:flex; align-items:center; gap:.8em; text-align:left;
+    background:var(--paper); border:1.5px solid var(--line); border-radius:11px;
+    padding:.8em 1em; font-family:'Inter',sans-serif; font-size:.96rem; color:var(--ink);
+    cursor:pointer; transition:border-color .15s ease, background .15s ease, transform .1s ease;
+  }
+  .option:hover:not(:disabled){border-color:var(--navy-2);}
+  .option:active:not(:disabled){transform:scale(.99);}
+  .option:disabled{cursor:default;}
+  .option .letter{
+    flex:none; width:26px; height:26px; border-radius:50%; border:1.5px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700;
+    color:var(--ink-soft); font-family:'JetBrains Mono',monospace;
+  }
+  .option.correct{border-color:var(--teal); background:var(--teal-soft);}
+  .option.correct .letter{border-color:var(--teal); background:var(--teal); color:#fff;}
+  .option.incorrect{border-color:var(--coral); background:var(--coral-soft);}
+  .option.incorrect .letter{border-color:var(--coral); background:var(--coral); color:#fff;}
+  .option.dim{opacity:.55;}
+
+  .simple{
+    border-left:3px solid var(--gold); background:var(--gold-soft);
+    border-radius:0 var(--radius) var(--radius) 0;
+    padding:1em 1.2em; margin:1.2em 0 0 0; font-size:.93rem; display:none;
+  }
+  .simple.show{display:block;}
+  .simple .lbl{font-weight:700; color:var(--navy); display:block; margin-bottom:.25em; font-size:.8rem; text-transform:uppercase; letter-spacing:.04em;}
+
+  .actions-row{display:flex; justify-content:flex-end; margin-top:1.4em;}
+  .btn{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:.92rem;
+    border-radius:10px; padding:.7em 1.4em; cursor:pointer; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--navy); color:#fff; border-color:var(--navy);}
+  .btn-primary:hover{background:var(--navy-2); border-color:var(--navy-2);}
+  .btn-primary:disabled{opacity:.4; cursor:default; background:var(--navy);}
+  .btn-ghost{background:var(--paper-2); color:var(--navy); border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--navy-2);}
+
+  /* ---------- results screen ---------- */
+  .results{text-align:center; padding:2em 1.6em;}
+  .results .big-score{
+    font-family:'Fraunces',serif; font-weight:700; font-size:3.4rem; color:var(--navy);
+    margin:.2em 0 0 0;
+  }
+  .results .big-score small{font-size:1.4rem; color:var(--ink-soft); font-weight:600;}
+  .results .verdict{
+    display:inline-block; margin-top:.6em; font-weight:700; font-size:.85rem;
+    letter-spacing:.03em; text-transform:uppercase; padding:.35em .9em; border-radius:999px;
+  }
+  .verdict.high{color:#fff; background:var(--teal);}
+  .verdict.mid{color:#fff; background:var(--gold);}
+  .verdict.low{color:#fff; background:var(--coral);}
+  .results p.msg{color:var(--ink-soft); margin-top:1em; max-width:44ch; margin-left:auto; margin-right:auto;}
+  .results-actions{display:flex; gap:.8em; justify-content:center; margin-top:1.6em; flex-wrap:wrap;}
+
+  .review-list{margin-top:1.8em; text-align:left;}
+  .review-item{
+    border:1px solid var(--line); border-radius:11px; padding:.9em 1.1em; margin-bottom:.7em;
+    font-size:.9rem; display:flex; gap:.7em; align-items:flex-start;
+  }
+  .review-item .mark{flex:none; font-weight:700; font-family:'JetBrains Mono',monospace; margin-top:.1em;}
+  .review-item.ok .mark{color:var(--teal);}
+  .review-item.bad .mark{color:var(--coral);}
+  .review-item .rtxt strong{display:block; color:var(--navy); margin-bottom:.2em;}
+  .review-item .rtxt span{color:var(--ink-soft);}
+
+  footer{
+    max-width:var(--maxw); margin:2em auto 0 auto; padding:1.6em 1.25em 3em 1.25em;
+    color:var(--ink-soft); font-size:.85rem; border-top:1px solid var(--line);
+  }
+
+  @media(max-width:480px){
+    .card{padding:1.3em 1.2em;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Finanzas Públicas <small>· Autoevaluación</small></div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Academia Diplomática y Consular · Curso de Perfeccionamiento</div>
+    <h1>Ponete a prueba</h1>
+    <p class="lead">10 preguntas de opción múltiple sobre finanzas públicas, el Presupuesto General de la Nación y el Clasificador Presupuestario de Paraguay. Elegí una respuesta para ver si acertaste.</p>
+  </section>
+
+  <div id="quizArea"></div>
+</main>
+
+<footer>
+  <p>Juego de autoevaluación elaborado a partir de los mismos contenidos de la guía de estudio "Finanzas Públicas y Clasificador Presupuestario", de la Academia Diplomática y Consular del Paraguay.</p>
+</footer>
+
+<script>
+(function () {
+  const QUESTIONS = [
+    {
+      tag: "Finanzas públicas",
+      q: "Según el ciclo del Estado, ¿qué paso sigue justo después de que el Estado 'asigna' los recursos en el presupuesto?",
+      options: [
+        "Rinde cuentas",
+        "Presta bienes y servicios",
+        "Obtiene recursos",
+        "Aprueba la ley"
+      ],
+      correct: 1,
+      explain: "Después de asignar los recursos en el presupuesto, el Estado los usa para prestar servicios (salud, educación, seguridad, infraestructura). Recién después llega la rendición de cuentas."
+    },
+    {
+      tag: "Marco legal",
+      q: "¿Qué artículo de la Constitución Nacional obliga a que exista un Presupuesto General de la Nación y marca sus plazos?",
+      options: [
+        "Artículo 128",
+        "Artículo 216",
+        "Artículo 1535",
+        "Artículo 30"
+      ],
+      correct: 1,
+      explain: "El Artículo 216 de la Constitución obliga a que exista un PGN y establece que debe presentarse al Congreso antes del 1 de septiembre y aprobarse antes del 30 de noviembre."
+    },
+    {
+      tag: "Marco legal",
+      q: "¿Cómo se conoce a la Ley N° 1535/99?",
+      options: [
+        "Ley de Presupuesto por Resultados",
+        "Ley Orgánica del Congreso",
+        "Ley de Administración Financiera del Estado",
+        "Ley del Clasificador Presupuestario"
+      ],
+      correct: 2,
+      explain: "La Ley 1535/99 es la 'Ley de Administración Financiera del Estado': el reglamento detallado de cómo se planifica, ejecuta, controla y liquida el presupuesto."
+    },
+    {
+      tag: "Principios presupuestarios",
+      q: "El principio por el cual todo ingreso y todo gasto del Estado debe aparecer en el presupuesto, sin quedar nada 'afuera', se llama:",
+      options: [
+        "Anualidad",
+        "Universalidad",
+        "Equilibrio",
+        "Unidad"
+      ],
+      correct: 1,
+      explain: "La Universalidad exige que todo ingreso y todo gasto figure en el presupuesto, sin excepciones ocultas."
+    },
+    {
+      tag: "Gestión presupuestaria",
+      q: "En los cinco pasos de la gestión presupuestaria, ¿cuál es el paso final, donde se mide si el gasto sirvió?",
+      options: [
+        "Ejecutar",
+        "Controlar",
+        "Evaluar",
+        "Planificar"
+      ],
+      correct: 2,
+      explain: "El ciclo termina en 'Evaluar': se miden los resultados para decidir mejor la próxima vez, después de planificar, asignar, ejecutar y controlar."
+    },
+    {
+      tag: "Sector público",
+      q: "¿Cuál de estas instituciones pertenece a la Administración Descentralizada, y no a la Administración Central?",
+      options: [
+        "Poder Judicial",
+        "Contraloría General de la República",
+        "IPS (seguridad social)",
+        "Poder Legislativo"
+      ],
+      correct: 2,
+      explain: "El IPS es una entidad de seguridad social dentro de la Administración Descentralizada. Los tres poderes del Estado y la Contraloría forman la Administración Central."
+    },
+    {
+      tag: "Clasificador Presupuestario",
+      q: "¿Cuál es la función principal del Clasificador Presupuestario?",
+      options: [
+        "Fijar el tipo de cambio del guaraní",
+        "Ordenar, registrar y analizar todos los ingresos y gastos del PGN con categorías comunes",
+        "Auditar los estados financieros del Banco Central",
+        "Definir el salario mínimo del sector público"
+      ],
+      correct: 1,
+      explain: "El Clasificador es el 'idioma común' que usan todas las instituciones del Estado para anotar sus gastos, de modo que todo se pueda sumar, comparar y controlar de la misma manera."
+    },
+    {
+      tag: "Las 5 preguntas del gasto",
+      q: "La clasificación Funcional de un gasto responde a la pregunta:",
+      options: [
+        "¿Quién gasta?",
+        "¿Con qué plata?",
+        "¿Para qué?",
+        "¿En qué programa?"
+      ],
+      correct: 2,
+      explain: "La clasificación Funcional agrupa el gasto según su propósito (salud, educación, defensa...), sin importar qué institución lo ejecute — responde '¿para qué?'."
+    },
+    {
+      tag: "Fuente de financiamiento",
+      q: "El código FF20 corresponde a:",
+      options: [
+        "Recursos del Tesoro",
+        "Recursos Institucionales",
+        "Recursos del Crédito Público",
+        "Donaciones internacionales"
+      ],
+      correct: 2,
+      explain: "FF10 es Tesoro, FF20 es Crédito Público (endeudamiento interno o externo) y FF30 es Institucional (recursos propios de cada organismo)."
+    },
+    {
+      tag: "Clasificación Económica",
+      q: "La construcción de un puente se clasifica, económicamente, como:",
+      options: [
+        "Gasto corriente",
+        "Gasto de capital",
+        "Gasto de financiamiento",
+        "Transferencia corriente"
+      ],
+      correct: 1,
+      explain: "Es gasto de capital: crea infraestructura nueva que aumenta el patrimonio del Estado, a diferencia del gasto corriente que cubre el funcionamiento diario."
+    }
+  ];
+
+  const quizArea = document.getElementById('quizArea');
+  let current = 0;
+  let score = 0;
+  const answers = []; // { chosen, correct }
+
+  function render() {
+    if (current >= QUESTIONS.length) {
+      renderResults();
+      return;
+    }
+    const item = QUESTIONS[current];
+    const pct = Math.round((current / QUESTIONS.length) * 100);
+    const letters = ['A', 'B', 'C', 'D'];
+
+    quizArea.innerHTML = `
+      <div class="progress-wrap">
+        <span>Pregunta ${current + 1} de ${QUESTIONS.length}</span>
+        <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+        <span class="score-chip">${score} ✓</span>
+      </div>
+      <div class="card">
+        <span class="q-tag">${item.tag}</span>
+        <div class="q-text">${item.q}</div>
+        <div class="options" id="optionsWrap">
+          ${item.options.map((opt, i) => `
+            <button class="option" data-idx="${i}">
+              <span class="letter">${letters[i]}</span>
+              <span>${opt}</span>
+            </button>
+          `).join('')}
+        </div>
+        <div class="simple" id="explainBox">
+          <span class="lbl">En simple</span>
+          <span id="explainText"></span>
+        </div>
+        <div class="actions-row">
+          <button class="btn btn-primary" id="nextBtn" disabled>
+            ${current === QUESTIONS.length - 1 ? 'Ver resultado' : 'Siguiente pregunta'}
+          </button>
+        </div>
+      </div>
+    `;
+
+    const optionsWrap = document.getElementById('optionsWrap');
+    const nextBtn = document.getElementById('nextBtn');
+    const explainBox = document.getElementById('explainBox');
+    const explainText = document.getElementById('explainText');
+    let answered = false;
+
+    optionsWrap.querySelectorAll('.option').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        answered = true;
+        const idx = parseInt(btn.dataset.idx, 10);
+        const isCorrect = idx === item.correct;
+        if (isCorrect) score++;
+        answers.push({ chosen: idx, correct: item.correct, q: item.q, options: item.options });
+
+        optionsWrap.querySelectorAll('.option').forEach(b => {
+          const bi = parseInt(b.dataset.idx, 10);
+          b.disabled = true;
+          if (bi === item.correct) b.classList.add('correct');
+          else if (bi === idx) b.classList.add('incorrect');
+          else b.classList.add('dim');
+        });
+
+        explainText.textContent = item.explain;
+        explainBox.classList.add('show');
+        nextBtn.disabled = false;
+      });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      current++;
+      render();
+    });
+  }
+
+  function renderResults() {
+    const total = QUESTIONS.length;
+    const pct = Math.round((score / total) * 100);
+    let verdictClass = 'low', verdictLabel = 'A reforzar', msg = 'Repasá el ciclo presupuestario y las cinco clasificaciones del gasto: con otra vuelta a la guía lo dominás.';
+    if (pct >= 80) {
+      verdictClass = 'high'; verdictLabel = 'Excelente';
+      msg = 'Manejás con solidez las finanzas públicas y el Clasificador Presupuestario. ¡Muy buen nivel!';
+    } else if (pct >= 50) {
+      verdictClass = 'mid'; verdictLabel = 'Buen punto de partida';
+      msg = 'Vas bien encaminado. Repasá los temas donde fallaste y volvé a intentarlo.';
+    }
+
+    quizArea.innerHTML = `
+      <div class="card results">
+        <span class="q-tag">Resultado final</span>
+        <div class="big-score">${score}<small> / ${total}</small></div>
+        <div class="verdict ${verdictClass}">${verdictLabel} · ${pct}%</div>
+        <p class="msg">${msg}</p>
+        <div class="results-actions">
+          <button class="btn btn-primary" id="retryBtn">Volver a intentar</button>
+        </div>
+        <div class="review-list" id="reviewList"></div>
+      </div>
+    `;
+
+    const reviewList = document.getElementById('reviewList');
+    const letters = ['A', 'B', 'C', 'D'];
+    reviewList.innerHTML = answers.map(a => {
+      const ok = a.chosen === a.correct;
+      return `
+        <div class="review-item ${ok ? 'ok' : 'bad'}">
+          <span class="mark">${ok ? '✓' : '✕'}</span>
+          <div class="rtxt">
+            <strong>${a.q}</strong>
+            <span>Tu respuesta: ${letters[a.chosen]}) ${a.options[a.chosen]}${ok ? '' : ' · Correcta: ' + letters[a.correct] + ') ' + a.options[a.correct]}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    document.getElementById('retryBtn').addEventListener('click', () => {
+      current = 0;
+      score = 0;
+      answers.length = 0;
+      render();
+    });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
